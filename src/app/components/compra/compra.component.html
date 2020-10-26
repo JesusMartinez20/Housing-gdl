@@ -1,0 +1,115 @@
+<div class="container-fluid animated fadeIn fast mt-3 p-4">
+    <div class="card mb-3 border-success">
+        <div class="card-header border-success text-center">
+            <h4> Promociones </h4>
+        </div>
+        <div class="card-body">
+            <p>Aquí puedes agregar promociones que pueden aplicar descuentos en la compra.</p>
+            <div class="row h-100">
+                <div class="col-md-6 p-2">
+                    <button class="btn btn-block btn-outline-success" data-toggle="modal" data-target="#promoCodigo"> Ingresar Código de Promoción </button>
+                </div>
+                <div class="col-md-6 p-2">
+                    <button class="btn btn-block btn-outline-success" data-toggle="modal" data-target="#promoReferencia"> Ingresar Código de Referencia</button>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="table table-striped table-bordered table-hover">
+                        <thead class="thead-dark text-center">
+                            <tr>
+                                <th scope="col" style="width: 30%;">Nombre de Boleto</th>
+                                <th scope="col" style="width: 10%;">Precio por Unidad</th>
+                                <th scope="col" style="width: 10%;">Cantidad a Comprar</th>
+                                <th scope="col" style="width: 20%;">Precio Total por Boleto</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-center">
+                            <tr *ngFor="let boleto of compra">
+                                <th scope="row" class="align-middle">{{ boleto.nombre }}</th>
+                                <td class="align-middle">{{ boleto.precio | currency:'MXN':'symbol'}}</td>
+                                <td class="align-middle">{{ boleto.cantidad }}</td>
+                                <td class="align-middle">{{ boleto.cantidad * boleto.precio | currency:'MXN':'symbol' }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <hr>
+            <div class="row h-100">
+                <div class="col-md-12 text-center">
+                    <h5> Total: </h5>
+                    <h5> {{ total | currency:'MXN':'symbol' }} </h5>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <button class="btn btn-outline-success mx-auto" (click)="hacerCompra()"> Continuar con la compra</button>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<br>
+<br>
+<br>
+
+<div class="modal fade" id="promoCodigo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Promocion por Código</h5>
+                <button #cerrarModalPromoCod type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Ingrese el codigo proporcionado para aplicar un descuento a la compra.</p>
+                <form [formGroup]="formCodigo" (submit)="aplicarPromoCodigo()">
+                    <div class="form-row mb-3">
+                        <label for="codigo">Código: <small>(Clave única de 10 caracteres.)</small></label>
+                        <input type="text" minlength="10" maxlength="10" id="codigo" class="form-control" placeholder="AAAAAAAAAA" [class.is-invalid]="codigoValidacion" formControlName="codigo">
+                        <small *ngIf="codigoValidacion" class="form-text text-danger text-center ml-1">Código no válido. Debe contener 10 caracteres.</small>
+                    </div>
+                    <hr>
+                    <div class="row pb-2 mt-0">
+                        <div class="col-md-12 text-center">
+                            <button type="button" class="btn btn-secondary mr-1" data-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-success">Aplicar Promoción</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="promoReferencia" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Promocion por boleto de Referencia</h5>
+                <button #cerrarModalPromoRef type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <p>Ingrese el codigo de compra del boleto relacionado con el que está intentando comprar para aplicar un descuento a la compra.</p>
+                <form [formGroup]="formReferencia" (submit)="aplicarPromoReferencia()">
+                    <div class="form-row mb-3">
+                        <label for="codigo">Código de compra: <small>(Se puede encontrar en el historial de compras.)</small></label>
+                        <input type="text" id="codigo" class="form-control" formControlName="codigoBoleto">
+                    </div>
+                    <hr>
+                    <div class="row pb-2 mt-0">
+                        <div class="col-md-12 text-center">
+                            <button type="button" class="btn btn-secondary mr-1" data-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-success">Aplicar Promoción</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

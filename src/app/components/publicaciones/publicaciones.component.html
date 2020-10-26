@@ -1,0 +1,28 @@
+<div class="container-fluid animated fadeIn fast">
+    <div class="row row-cols-1 row-cols-md-3 m-4">
+        <div class="col-md-4" *ngFor="let pub of publicaciones">
+            <div class="card">
+                <img class="card-img-top" [src]="'admin/assets/img/publicaciones/'+pub.publi_img" width="450px" height="300px" alt="Card image cap">
+                <div class="card-body" style="height: 270px;">
+                    <div class="text-center">
+                        <h5> {{ pub.titulo_pub }} </h5>
+                    </div>
+                    <hr>
+                    <div>
+                        <p class="card-text"> {{ (pub.articulo_pub.length>150) ? (pub.articulo_pub | slice:0:150)+'...':(pub.articulo_pub) }} </p>
+                    </div>
+                    <hr>
+                    <div>
+                        <p class="card-text"><small class="text-muted"> {{ pub.creacion_pub | date:' dd/mm/yyyy h:mm a' }} </small></p>
+                    </div>
+                </div>
+                <div class="card-footer p-3">
+                    <button (click)="verPublicacion( pub.id_publicacion )" class="btn btn-block btn-outline-success">Ver más</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<br>
+<br>

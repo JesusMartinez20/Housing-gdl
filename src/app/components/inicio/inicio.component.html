@@ -1,0 +1,95 @@
+<div id="carouselExampleIndicators" class="carousel slide animated fadeIn container-fluid p-0" data-ride="carousel" data-interval="5000">
+    <ol class="carousel-indicators">
+        <li data-target="#carouselExampleIndicators" data-slide-to="0"></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+    </ol>
+    <div class="carousel-inner">
+        <div class="carousel-item" *ngFor="let evento of carousel; let i = index;" [class.active]="i == 0">
+            <img class="d-block w-100" [src]="'admin/assets/img/eventos/'+evento.carousel_img" alt="First slide" width="600" height="500">
+            <div class="carousel-caption d-none d-md-block">
+                <h5> {{ evento.nombre_evento }} </h5>
+                <p> {{ (evento.descripcion_evento.length>50)? (evento.descripcion_evento | slice:0:50)+'...':(evento.descripcion_evento) }} </p>
+                <button (click)="verEvento( evento.id_evento )" class="btn btn-outline-light">Ver m&aacute;s</button>
+            </div>
+        </div>
+    </div>
+    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Anterior</span>
+    </a>
+    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Siguiente</span>
+    </a>
+</div>
+
+<div class="contaienr-fluid m-4 p-2 border rounded animated fadeIn fast">
+    <div class="container-fluid text-center">
+        <h3>Eventos más vistos</h3>
+        <hr>
+    </div>
+    <owl-carousel-o [options]="customOptions">
+        <ng-template carouselSlide *ngFor="let evento of eventos">
+            <div class="slide">
+                <div class="card m-4">
+                    <img class="card-img-top" [src]="'admin/assets/img/eventos/'+evento.evento_img" width="450px" height="300px" alt="Card image cap">
+                    <div class="card-body" style="height: 270px;">
+                        <div class="text-center">
+                            <h5> {{ evento.nombre_evento }} </h5>
+                        </div>
+                        <hr>
+                        <div>
+                            <h5>Descripción</h5>
+                            <p class="card-text"> {{ (evento.descripcion_evento.length>150)? (evento.descripcion_evento | slice:0:150)+'...':(evento.descripcion_evento) }} </p>
+                        </div>
+                        <hr>
+                        <div>
+                            <h5>Fechas</h5>
+                            <small class="text-muted"> Inicio: {{ evento.dia_inicio_evento | date:'dd-MM-yyyy' }} a las {{evento.hora_inicio_evento}} </small><br>
+                            <small class="text-muted"> Cierre: {{ evento.dia_conclusion_evento | date:'dd-MM-yyyy' }} a las {{evento.hora_conclusion_evento}}</small>
+                        </div>
+                    </div>
+                    <div class="card-footer p-3">
+                        <button (click)="verEvento( evento.id_evento )" class="btn btn-block btn-outline-success">Ver m&aacute;s</button>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+    </owl-carousel-o>
+</div>
+
+<div class="contaienr-fluid m-4 p-2 border rounded animated fadeIn fast">
+    <div class="container-fluid text-center">
+        <h3> Publicaciones Recientes </h3>
+        <hr>
+    </div>
+    <owl-carousel-o [options]="customOptions">
+        <ng-template carouselSlide *ngFor="let pub of publicaciones">
+            <div class="slide">
+                <div class="card m-4">
+                    <img class="card-img-top" [src]="'admin/assets/img/publicaciones/'+pub.publi_img" width="450px" height="300px" alt="Card image cap">
+                    <div class="card-body" style="height: 270px;">
+                        <div class="text-center">
+                            <h5> {{ pub.titulo_pub }} </h5>
+                        </div>
+                        <hr>
+                        <div>
+                            <p class="card-text"> {{ (pub.articulo_pub.length>150) ? (pub.articulo_pub | slice:0:150)+'...':(pub.articulo_pub) }} </p>
+                        </div>
+                        <hr>
+                        <div>
+                            <p class="card-text"><small class="text-muted"> Publicación creada el {{ pub.creacion_pub | date:' dd/mm/yyyy h:mm:a ' }} </small></p>
+                        </div>
+                    </div>
+                    <div class="card-footer p-3">
+                        <button (click)="verPublicacion( pub.id_publicacion )" class="btn btn-block btn-outline-success">Ver más</button>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+    </owl-carousel-o>
+</div>
+<br>
+<br>
+<br>
