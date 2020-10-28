@@ -2,14 +2,16 @@ import { Component, OnInit } from '@angular/core';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { Router } from '@angular/router';
 import { PublicacionesService } from '../../services/publicaciones.service';
-import { EventosService } from '../../services/eventos.service';
+import { CasasService } from '../../services/casas.service';
+import {environment} from '../../../environments/environment'
 
 @Component({
   selector: 'app-inicio',
   templateUrl: './inicio.component.html'
 })
 export class InicioComponent implements OnInit {
-
+  rutaimgCasa = environment.imgUrl;
+  rutaimgPublicacion = environment.imgUrlPublicacion;
   customOptions: OwlOptions = {
     loop: true,
     mouseDrag: true,
@@ -35,14 +37,14 @@ export class InicioComponent implements OnInit {
     }
   }
 
-  eventos = null;
+  casas = null;
 
   imgs = null;
 
-  evento = {
-    id_evento:null,
-    nombre_evento:null,
-    descripcion_evento:null
+  casa = {
+    id_casa:null,
+    nombre_casa:null,
+    descripcion_casa:null
   }
 
   publicaciones = null;
@@ -58,33 +60,33 @@ export class InicioComponent implements OnInit {
 
   constructor( private router:Router,
                private publicacionesService:PublicacionesService,
-               private eventosService:EventosService,
+               private casasService:CasasService,
               ) { }
 
   ngOnInit() {
-    this.getEventos();
+    this.getCasas();
     this.getPublicaciones();
     this.getCarousel();
   }
 
   getCarousel(){
-    this.eventosService.getCarousel().subscribe( resultado => this.carousel = resultado);
+    this.casasService.getCarousel().subscribe( resultado => this.carousel = resultado);
     console.log(this.carousel);
   }
 
-  getEventos(){
-    this.eventosService.getEventos().subscribe( resultado => this.eventos = resultado );
+  getCasas(){
+    this.casasService.getCasas().subscribe( resultado => this.casas = resultado );
   }
 
   getPublicaciones(){
     this.publicacionesService.getPublicaciones().subscribe( resultado => this.publicaciones = resultado);
   }
 
-  verEvento( id_evento:number ){
-    this.router.navigate(['evento', id_evento]);
+  verCasa( id_casa:number ){
+    this.router.navigate(['casa', id_casa]);
   }
 
-  verPublicacion( id_piblicacion:number ){
-    this.router.navigate(['publicacion', id_piblicacion])
+  verPublicacion( id_publicacion:number ){
+    this.router.navigate(['publicacion', id_publicacion])
   }
 }

@@ -5,7 +5,7 @@
         </div>
         <div class="card-body">
             <div class="pt-4 text-center mb-3">
-                <img [src]="'admin/assets/img/publicaciones/'+publicacion.publi_img" alt="img_principal" class="figure-img img-fluid rounded mx-auto" width="950" height="650">
+                <img [src]="rutaimgPublicacion+publicacion.publi_img" alt="img_principal" class="figure-img img-fluid rounded mx-auto" width="950" height="650">
             </div>
             <hr>
             <div class="container-fluid">
@@ -16,7 +16,7 @@
                 <owl-carousel-o [options]="customOptions">
                     <ng-template carouselSlide *ngFor="let img of imgs">
                         <div class="slide">
-                            <img [src]="'admin/assets/img/publicaciones/'+img.ruta_imagen_pub" height="350px" class="p-1">
+                            <img [src]="rutaimgPublicacion+img.ruta_imagen_pub" height="350px" class="p-1">
                         </div>
                     </ng-template>
                 </owl-carousel-o>

@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { PublicacionesService } from '../../services/publicaciones.service';
-
+import {environment} from '../../../environments/environment'
 
 @Component({
   selector: 'app-publicaciones',
   templateUrl: './publicaciones.component.html'
 })
 export class PublicacionesComponent implements OnInit {
-
+  rutaimgPublicacion = environment.imgUrlPublicacion;
   publicaciones = null;
 
   publicacion = {

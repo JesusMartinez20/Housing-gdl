@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { retry } from 'rxjs/operators';
 import { serialize } from 'object-to-formdata';
+import {environment} from 'src/environments/environment'
 
 @Injectable({
   providedIn: 'root'

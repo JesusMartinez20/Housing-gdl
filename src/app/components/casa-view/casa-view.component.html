@@ -1,54 +1,38 @@
 <div class="container-fluid animated fadeIn fast mt-3">
     <div class="card mb-3 border-primary">
         <div class="card-header border-primary text-center">
-            <h4> {{ evento.nombre_evento}} </h4>
+            <h4> {{ casa.nombre_casa}} </h4>
         </div>
         <div class="pt-4 text-center mb-3">
-            <img [src]="'admin/assets/img/eventos/'+evento.evento_img" alt="img_principal" class="figure-img img-fluid rounded mx-auto" width="950" height="650">
+            <img [src]="rutaimgCasa+casa.principal_img" alt="img_principal" class="figure-img img-fluid rounded mx-auto" width="950" height="650">
         </div>
         <div class="card-body text-center">
             <h4>Imágenes Generales.</h4>
             <owl-carousel-o [options]="customOptions">
                 <ng-template carouselSlide *ngFor="let img of imgs">
                     <div class="slide">
-                        <img [src]="'admin/assets/img/eventos/'+img.ruta_imagen_eve" alt="imgs" width="300" height="300" class="p-1 figure-img rounded">
+                        <img [src]="rutaimgCasa+img.ruta_imagen_casa" alt="imgs" width="300" height="300" class="p-1 figure-img rounded">
                     </div>
                 </ng-template>
             </owl-carousel-o>
             <hr>
             <div class="container-fluid text-left">
                 <h4>Descripción.</h4>
-                <p> {{evento.descripcion_evento}} </p>
+                <p> {{casa.descripcion_casa}} </p>
+            </div>
+            <div class="container-fluid text-left">
+              <h4>Direccion.</h4>
+              <p> {{casa.direccion_casa}} </p>
             </div>
             <hr>
-            <div class="container-fluid text-left">
-                <h4>Enlace.</h4>
-                <p> {{evento.enlace_evento}} </p>
-            </div>
             <hr>
             <div class="container-fluid text-left" *ngIf="puedeComentar == true">
-                <h4>Calificación del Evento.</h4>
-                <h5> {{evento.calificacion_evento}} </h5>
-            </div>
-        </div>
-        <div class="card-footer">
-            <p class="card-text">
-                <small class="text-muted"> Inicio: {{ evento.dia_inicio_evento | date:'dd-MM-yyyy' }} a las {{evento.hora_inicio_evento}} </small><br>
-                <small class="text-muted"> Cierre: {{ evento.dia_conclusion_evento | date:'dd-MM-yyyy' }} a las {{evento.hora_conclusion_evento}}</small>
-            </p>
-        </div>
-    </div>
-
-    <div class="card mb-3 border-danger" *ngIf="cancelado == true">
-        <div class="card-body">
-            <div class="row h-100">
-                <div class="col-md-12 text-center">
-                    <h5 class="text-danger">Este evento ha sido cancelado.</h5>
-                </div>
+                <!--<h4>Calificación de la casa.</h4>
+                <h5> {{casa.calificacion_evento}} </h5>-->
             </div>
         </div>
     </div>
-
+<!--
     <ng-container *ngIf="puedeComentar == false && cancelado == false">
         <div class="card mb-3 border-success" *ngFor="let boleto of boletos">
             <div class="card-header border-success">
@@ -88,7 +72,7 @@
             </div>
         </div>
     </ng-container>
-
+-->
     <div class="card" *ngIf="puedeComentar == true">
         <div class="card-header">
             <h4>Comentarios.</h4>

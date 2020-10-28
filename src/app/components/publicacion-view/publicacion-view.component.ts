@@ -2,13 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { ActivatedRoute } from '@angular/router';
 import { PublicacionesService } from '../../services/publicaciones.service';
+import {environment} from '../../../environments/environment'
 
 @Component({
   selector: 'app-publicacion-view',
   templateUrl: './publicacion-view.component.html'
 })
 export class PublicacionViewComponent implements OnInit {
-
+  rutaimgPublicacion = environment.imgUrlPublicacion;
   customOptions: OwlOptions = {
     loop: true,
     mouseDrag: true,

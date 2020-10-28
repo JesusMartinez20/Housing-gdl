@@ -1,15 +1,17 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { OwlOptions } from 'ngx-owl-carousel-o';
-import { EventosService } from '../../services/eventos.service';
+import { CuartosService } from '../../services/cuartos.service';
 import { ActivatedRoute } from '@angular/router';
-import { BoletosService } from '../../services/boletos.service';
+import { CasasService } from '../../services/casas.service';
 import { UsuariosService } from '../../services/usuarios.service';
+import {environment} from '../../../environments/environment'
 
 @Component({
-  selector: 'app-evento-view',
-  templateUrl: './evento-view.component.html'
+  selector: 'app-casa-view',
+  templateUrl: './casa-view.component.html'
 })
-export class EventoViewComponent implements OnInit {
+export class CasaViewComponent implements OnInit {
+  rutaimgCasa = environment.imgUrl;
   customOptions: OwlOptions = {
     loop: true,
     mouseDrag: true,
@@ -35,12 +37,12 @@ export class EventoViewComponent implements OnInit {
     nav: true
   }
 
-  evento:any = {};
-
+  //evento:any = {};
+  casa:any = {};
   imgs:any = null;
 
-  boletos:any = null;
-
+  //boletos:any = null;
+  cuartos:any = null;
   usuario:any = null;
 
   puedeComentar:boolean = false;
@@ -52,70 +54,45 @@ export class EventoViewComponent implements OnInit {
 
   loggedIn:boolean = false;
 
-  @ViewChild('cantBoleto') cantBoleto: ElementRef;
+  //@ViewChild('cantBoleto') cantBoleto: ElementRef;
 
   constructor( private activatedRoute:ActivatedRoute,
-               private eventosService:EventosService,
-               private boletosService:BoletosService,
+               private casasService:CasasService,
+               private cuartosService:CuartosService,
                private usuariosService:UsuariosService
               ) { }
 
   ngOnInit(){
     this.loggedIn = this.usuariosService.getEstadoSesion();
     this.activatedRoute.params.subscribe( params => {
-      this.getEstadoEvento(params['id']);
+      //this.getEstadoEvento(params['id']);
       this.getComentarios(params['id']);
       if(this.loggedIn){
         this.validarComentarios(params['id']);
       }
-      this.eventosService.getEvento(params['id']).subscribe( resultado => this.evento = resultado[0]);
-      this.eventosService.getImgs(params['id']).subscribe(resultado => this.imgs = resultado);
-      this.boletosService.getBoletos(params['id']).subscribe(resultado => this.boletos = resultado);
+      this.casasService.getCasa(params['id']).subscribe( resultado => this.casa = resultado[0]);
+      this.casasService.getImgs(params['id']).subscribe(resultado => this.imgs = resultado);
+      this.cuartosService.getBoletos(params['id']).subscribe(resultado => this.cuartos = resultado);
     })
   }
 
-  getEstadoEvento(id_evento:number){
-    this.eventosService.getEstadoEvento(id_evento).subscribe(datos => {
-      console.log(datos['estado']);
-      console.log(this.loggedIn);
-      if(datos['resultado'] == "ERROR"){
-        window.confirm("Ha ocurrido un error inesperado: intentarlo más tarde.");
-        return
-      }
-      else{
-        if(datos['estado'] == 1){
-          this.puedeComentar = false;
-          return
-        }
-        else if(datos['estado'] == 2){
-          this.cancelado = true;
-          return
-        }
-        else{
-          this.puedeComentar = true;
-          return
-        }
-      }
-    })
-  }
-
-  validarComentarios( id_evento:number ){
+  validarComentarios( id_casa:number ){
     this.usuario = JSON.parse(localStorage.getItem("usuario"));
-    this.usuariosService.validarComentarios(this.usuario['id_usuario'], id_evento).subscribe(datos => {
+    this.usuariosService.validarComentarios(this.usuario['id_casa'], id_casa).subscribe(datos => {
         if(datos['estado'] == 0){
           this.comentar = false;
-          this.getComentarios(id_evento);
+          this.getComentarios(id_casa);
           return
         }
         else{
-          this.usuariosService.comprobarComentarios(this.usuario['id_usuario'], id_evento).subscribe(resultado => {
+          this.usuariosService.comprobarComentarios(this.usuario['id_usuario'], id_casa).subscribe(resultado => {
             if(resultado == 1){
               this.comentar = true;
-              this.getComentarios(id_evento);
+              this.getComentarios(id_casa);
             }
             else{
               this.comentar = false;
-              this.getComentarios(id_evento);
+              this.getComentarios(id_casa);
             }
           })
         }
@@ -132,8 +109,8 @@ export class EventoViewComponent implements OnInit {
     });
   }
 
-  getComentarios(id_evento:number){
-    this.eventosService.getComentarios(id_evento).subscribe(resultado => {
+  getComentarios(id_casa:number){
+    this.casasService.getComentarios(id_casa).subscribe(resultado => {
       this.comentarios = resultado;
 
       if(this.comentarios == null){
@@ -165,7 +142,7 @@ export class EventoViewComponent implements OnInit {
     }
   }
 
-  agregarCarrito( nombre:string, precio:number, cantidad:number, id:number){
+  /*agregarCarrito( nombre:string, precio:number, cantidad:number, id:number){
     let carrito = new Array(new Object);
 
     if(localStorage.getItem("carrito")){
@@ -208,6 +185,6 @@ export class EventoViewComponent implements OnInit {
     localStorage.setItem("carrito", JSON.stringify(carrito));
     window.confirm("Agregado al carrito...");
     console.log(carrito);
-  }
+  }*/
 
 }
