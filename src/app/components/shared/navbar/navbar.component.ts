@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SocialAuthService } from "angularx-social-login";
@@ -43,25 +43,27 @@ export class NavbarComponent implements OnInit {
       this.usuariosService.setEstadoSesion(true);
     }
 
+    console.log(this.usuarioFB);
     this.authService.authState.subscribe((user) => {
       if (this.usuarioFB === null ) {
         this.usuarioFB = user;
         this.loggedIn = (this.usuarioFB != null);
         localStorage.setItem("usuario", JSON.stringify(this.usuarioFB));
       }
-
       if(this.loggedIn){
         this.usuariosService.registrarUsuario(this.usuarioFB).subscribe( datos => {
           if(datos['resultado'] == "ERROR"){
             console.log("ERROR");
             return
           }
-          else if( datos['resultado'] == "OK"){
-            this.cerrar.nativeElement.click();
+          else if( datos['resultado'] == "OK")
+          {
             let tipo = datos["estado"];
+            console.log(tipo);
+            this.cerrar.nativeElement.click();
             if(tipo == 2){
-              this.usuariosService.consultaNotificacionBloqueo(datos["id_usuario"]).subscribe( mensajes => {
-                this.mensaje = mensajes;
+              this.usuariosService.consultaNotificacionBloqueo(datos["id_usuario"]).subscribe( resultado => {
+                this.mensaje = resultado['mensaje'];
 
               });
               this.modalBloqueo.nativeElement.click();
@@ -69,25 +71,24 @@ export class NavbarComponent implements OnInit {
               let usuario = JSON.parse(localStorage.getItem("usuario"));
               usuario["id_usuario"] = datos["id_usuario"];
               localStorage.setItem("usuario", JSON.stringify(usuario));
-              this.cerrar.nativeElement.click();
 
-                if(tipo == 0){
-                  this.modalRegistro.nativeElement.click();
-                }else if(tipo == 1){
-                  this.usuariosService.consultaNotificacion(usuario["id_usuario"]).subscribe( chats => {
-                    let chat = chats["chat"];
-                    if(chat == -1){
-                      return
-                    }else{
-                      //navegar a el chat
-                    }
-                  });
-                }else{
-                  this.usuariosService.datosPago(usuario["id_usuario"]).subscribe( pago => {
-                    this.datospago = pago;
-                  });
+              if(tipo == 0){
+                this.modalRegistro.nativeElement.click();
+              }else if(tipo == 1){
+                this.usuariosService.consultaNotificacion(usuario["id_usuario"]).subscribe( chats => {
+                  let chat = chats["chat"];
+                  if(chat == -1){
+                    return
+                  }else{
+                    //navegar a el chat
+                  }
+                });
+              }else{
+                this.usuariosService.datosPago(usuario["id_usuario"]).subscribe( pago => {
+                  this.datospago = pago;
+                });
 
-                }
+              }
 
               (this.loggedIn) ? this.usuariosService.setEstadoSesion(true) : this.usuariosService.setEstadoSesion(false);
               this.formRegistro.addControl('id', this.fb.control(null));
@@ -177,6 +178,7 @@ export class NavbarComponent implements OnInit {
           }
           else if(datos['resultado'] == "OK"){
             window.confirm("Registro completado con éxito.");
+            this.formRegistro.reset();
             this.cerrarModalRegistro.nativeElement.click();
           }
         })
@@ -188,6 +190,6 @@ export class NavbarComponent implements OnInit {
   }
 
   verChats(){
-    this.router.navigate(['']).
+    // this.router.navigate(['']).
   }
 }

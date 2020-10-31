@@ -32,15 +32,15 @@ export class CasasService {
   */
 
   getImgs( id:number ){
-    return this.http.get(`${this.url}/casas/verImgsCasa.php?id_casa=${id}`).pipe(retry(3))
+    return this.http.get(`${this.url}casas/verImgsCasa.php?id_casa=${id}`).pipe(retry(3))
   }
   getCasa( id:number ){
-    return this.http.get(`${this.url}/casas/verCasa.php?id_casa=${id}`).pipe(retry(3))
+    return this.http.get(`${this.url}casas/verCasa.php?id_casa=${id}`).pipe(retry(3))
   }
 
 
   getComentarios(id_casa:Number){
-    return this.http.get(`${this.url}/casas/comentario/VerComentarios.php?id_casa=${id_casa}`).pipe(retry(3))
+    return this.http.get(`${this.url}casas/comentario/VerComentarios.php?id_casa=${id_casa}`).pipe(retry(3))
   }
 
   filtrarCasas( filtro:any ){
@@ -49,10 +49,10 @@ export class CasasService {
   }
 
   getCarousel(){
-    return this.http.get(`${this.url}/Pagina/verCarousel.php`).pipe(retry(3))
+    return this.http.get(`${this.url}Pagina/verCarousel.php`).pipe(retry(3))
   }
   getCasas(){
-    return this.http.get(`${this.url}/Casas/VerCasas.php`).pipe(retry(3));
+    return this.http.get(`${this.url}Casas/VerCasas.php`).pipe(retry(3));
   }
 
 

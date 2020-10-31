@@ -71,7 +71,7 @@ export class InicioComponent implements OnInit {
 
   getCarousel(){
     this.casasService.getCarousel().subscribe( resultado => this.carousel = resultado);
-    console.log(this.carousel);
+    // console.log(this.carousel);
   }
 
   getCasas(){

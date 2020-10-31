@@ -41,6 +41,6 @@ export class PerfilComponent implements OnInit {
   }
 
   verChats(){
-    this.router.navigate(['']).
+    // this.router.navigate(['']).
   }
 }

@@ -79,7 +79,7 @@ import { PerfilEditarComponent } from './components/perfil-editar/perfil-editar.
         providers: [
           {
             id: FacebookLoginProvider.PROVIDER_ID,
-            provider: new FacebookLoginProvider('691078078359422'),
+            provider: new FacebookLoginProvider('411727070232371'),
           },
         ],
       } as SocialAuthServiceConfig,
