@@ -10,7 +10,7 @@ import {environment} from 'src/environments/environment'
 export class UsuariosService {
 
   // url = "https://proyectotapatio.com/PT-API-P/usuarios/";
-  url = "http://localhost:8080/PT-API/usuarios/";
+  url = environment.apiUrl;
 
   estadoS:boolean = false;
 
@@ -18,17 +18,36 @@ export class UsuariosService {
 
   registrarUsuario( usuario:any ){
     const USUARIO_FD = serialize(usuario);
-    return this.http.post(`${this.url}registrarUsuario.php`, USUARIO_FD).pipe(retry(3))
+    return this.http.post(`${this.url}/login/inicioSesion.php`, USUARIO_FD).pipe(retry(3))
   }
 
   terminarRegistro( datos:any, nombre:string, apellido:string ){
     const DATOS_REG = serialize(datos);
-    return this.http.post(`${this.url}terminarRegistro.php?nombre=${nombre}&apellido=${apellido}`, DATOS_REG).pipe(retry(3))
+    return this.http.post(`${this.url}/login/terminarRegistro.php?nombre=${nombre}&apellido=${apellido}`, DATOS_REG).pipe(retry(3))
   }
 
-  consultaTipoUsuario( id:string ){
-    return this.http.get(`${this.url}consultaUsuario.php?id=${id}`).pipe(retry(3))
+  consultaNotificacion( id:string ){
+    return this.http.get(`${this.url}/login/notificacionChat.php?id=${id}`).pipe(retry(3))
   }
+
+  consultaNotificacionBloqueo( id:string ){
+    return this.http.get(`${this.url}/login/notificacionBloqueo.php?id=${id}`).pipe(retry(3))
+  }
+
+  datosPago(id_usuario:number=null){
+    return this.http.get(`${this.url}/login/verPago.php?id_usuario=${id_usuario}`).pipe(retry(3))
+  }
+  buscarCorreo( correo:string, id:number = null ){
+    return this.http.get(`${this.url}/login/consultaCorreo.php?correo=${correo}&id=${id}`).pipe(retry(3))
+  }
+  verVentas(id_usuario:number){
+    return this.http.get(`${this.url}/datos/verDatosRenta.php?id_usuario=${id_usuario}`).pipe(retry(3))
+  }
+
+
+
+
+
 
   getUsuario(id_fb:string, id_usuario:number=null){
     return this.http.get(`${this.url}getUsuario.php?id_fb=${id_fb}&id_usuario=${id_usuario}`).pipe(retry(3))
@@ -58,10 +77,6 @@ export class UsuariosService {
     return this.http.get(`${this.url}EliminarComentario.php?id_cal=${id_cal}`).pipe(retry(3))
   }
 
-  verVentas(id_usuario:number){
-    return this.http.get(`${this.url}VerVentas.php?id_usuario=${id_usuario}`).pipe(retry(3))
-  }
-
   elementosVenta(id_venta:number){
     return this.http.get(`${this.url}VerElementosVentaIndividual.php?id_venta=${id_venta}`).pipe(retry(3))
   }
@@ -69,10 +84,6 @@ export class UsuariosService {
   editarInformacion(info:any){
     const INFO = serialize(info);
     return this.http.post(`${this.url}editarUsuario.php`, INFO).pipe(retry(3))
-  }
-
-  buscarCorreo( correo:string, id:number = null ){
-    return this.http.get(`${this.url}consultaCorreo.php?correo=${correo}&id=${id}`).pipe(retry(3))
   }
 
   verificarPago(id_venta:number, id_usuario:number ){

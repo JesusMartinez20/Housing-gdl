@@ -26,9 +26,13 @@
             </div>
             <hr>
             <hr>
-            <div class="container-fluid text-left" *ngIf="puedeComentar == true">
-                <!--<h4>Calificación de la casa.</h4>
-                <h5> {{casa.calificacion_evento}} </h5>-->
+            <div class="container-fluid text-left">
+              <!--
+              <h4>Calificaciónes de la casa.</h4>
+                <h5>Instalaciones {{casa.instalaciones_cal}} </h5>
+                <h5>Limpieza {{casa.limpieza_cal}} </h5>
+                <h5>Ambiente {{casa.ambiente_cal}} </h5>
+              -->
             </div>
         </div>
     </div>
@@ -73,7 +77,7 @@
         </div>
     </ng-container>
 -->
-    <div class="card" *ngIf="puedeComentar == true">
+    <div class="card">
         <div class="card-header">
             <h4>Comentarios.</h4>
         </div>
@@ -100,8 +104,10 @@
         </div>
         <div class="card-footer" *ngIf="comentar != false">
             <div class="row mt-2">
+              <h5>Califique la casa</h5>
+              <br>
                 <div class="col-md-3 text-center">
-                    <h6>Califique el Evento<small> (1 - 10)</small></h6>
+                  <h6>Instalaciones<small> (1 - 10)</small></h6>
                     <div class="input-group inline-group m-0 p-0 justify-content-center align-items-center">
                         <div class="input-group-prepend">
                             <button class="btn btn-outline-secondary btn-minus" (click)="cal.stepDown()">
@@ -117,6 +123,38 @@
                             </button>
                         </div>
                     </div>
+                    <h6>Ambiente<small> (1 - 10)</small></h6>
+                    <div class="input-group inline-group m-0 p-0 justify-content-center align-items-center">
+                      <div class="input-group-prepend">
+                          <button class="btn btn-outline-secondary btn-minus" (click)="cal.stepDown()">
+                            <i class="fa fa-minus"></i>
+                          </button>
+                      </div>
+                      <div class="w-25 m-0">
+                          <input #cal class="form-control quantity text-center" min="1" max="10" value="1" step="1" type="number" disabled>
+                      </div>
+                      <div class="input-group-append">
+                          <button class="btn btn-outline-secondary btn-plus" (click)="cal.stepUp()">
+                            <i class="fa fa-plus"></i>
+                          </button>
+                      </div>
+                  </div>
+                    <h6>Limpieza<small> (1 - 10)</small></h6>
+                    <div class="input-group inline-group m-0 p-0 justify-content-center align-items-center">
+                      <div class="input-group-prepend">
+                          <button class="btn btn-outline-secondary btn-minus" (click)="cal.stepDown()">
+                            <i class="fa fa-minus"></i>
+                          </button>
+                      </div>
+                      <div class="w-25 m-0">
+                          <input #cal class="form-control quantity text-center" min="1" max="10" value="1" step="1" type="number" disabled>
+                      </div>
+                      <div class="input-group-append">
+                          <button class="btn btn-outline-secondary btn-plus" (click)="cal.stepUp()">
+                            <i class="fa fa-plus"></i>
+                          </button>
+                      </div>
+                  </div>
                 </div>
                 <div class="col-md-7">
                     <div class="input-group input-group-sm">

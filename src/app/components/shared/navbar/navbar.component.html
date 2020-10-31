@@ -118,3 +118,70 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="modalBloqueo" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="modalEventoLabel" aria-hidden="true">
+  <div class="modal-dialog">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="modalBloqueoLabel">Usuario Bloqueado</h5>
+              <button #cerrarModalBloqueo type="button" class="close" data-dismiss="modal" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+          </div>
+          <div class="modal-body">
+              <p>Su usuario ha sido bloqueado, las razones son las siguientes</p>
+
+                  <div class="form-row mb-3">
+                      <div class="col-md-12">
+                        <p>{{ mensaje.mensaje }}</p>
+                      </div>
+                  </div>
+          </div>
+      </div>
+  </div>
+</div>
+<div class="modal fade" id="modalPago" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="modalEventoLabel" aria-hidden="true">
+  <div class="modal-dialog">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="modalPagoLabel">Pago</h5>
+              <button #cerrarModalPago type="button" class="close invisible" data-dismiss="modal" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+          </div>
+          <div class="modal-body">
+              <p>Datos de el pago: </p>
+              <form (ngSubmit)="realizarPago()">
+
+                  <div class="form-row mb-3">
+                      <div class="col-md-12">
+                          <label for="nombre">Casa: {{datospago.nombre_casa}}<small class="text-danger">*</small></label>
+                      </div>
+                      <div class="col-md-12">
+                        <label for="nombre">Cuarto: {{datospago.nombre_cuarto}}<small class="text-danger">*</small></label>
+                    </div>
+                  </div>
+
+                  <hr>
+
+                  <div class="form-row mb-3">
+                      <div class="col-md-6">
+                          <label for="tel">Semestre: {{datospago.nombre_semestre}}</label>
+                      </div>
+                      <div class="col-md-6">
+                          <label for="telext">Precio: {{datospago.precio}}<small class="text-danger">*</small></label>
+                      </div>
+                  </div>
+
+                  <hr>
+
+                  <div class="input-group form-row mb-3">
+                      <div class="col-md-12 text-center">
+                          <button class="btn btn-success" type="submit">Pagar</button>
+                          <button #modalPago class="invisible" type="button" data-toggle="modal" data-target="#modalPago">xxx</button>
+                      </div>
+                  </div>
+              </form>
+          </div>
+      </div>
+  </div>
+</div>

@@ -9,7 +9,6 @@ import { UsuariosService } from '../../services/usuarios.service';
 export class CompraInfoComponent implements OnInit {
 
   elementosVenta:any = null;
-  id_evento:number = null;
   pago:string = null;
   usuario:any = null;
 
@@ -18,8 +17,7 @@ export class CompraInfoComponent implements OnInit {
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(params => {
-      this.id_evento = params['id'];
-      this.verificarPago(params['id']);
+      //this.verificarPago(params['id']);
       this.usuariosService.elementosVenta(params['id']).subscribe(resultado => {
         this.elementosVenta = resultado;
         console.log(this.elementosVenta);
@@ -28,12 +26,12 @@ export class CompraInfoComponent implements OnInit {
     });
   }
 
-  verificarPago( id_venta:number ){
+  /*verificarPago( id_venta:number ){
     this.usuario = JSON.parse(localStorage.getItem("usuario"));
     this.usuariosService.verificarPago(id_venta, this.usuario['id_usuario']).subscribe(datos => {
       console.log(datos);
       this.pago = datos['pago'];
     })
-  }
+  }*/
 
 }

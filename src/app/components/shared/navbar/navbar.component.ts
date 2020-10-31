@@ -14,12 +14,18 @@ export class NavbarComponent implements OnInit {
 
   usuarioFB: SocialUser = null;
   loggedIn:boolean = false;
+  mensaje = null;
+  datospago = null;
 
   formRegistro:FormGroup;
 
   @ViewChild('cerrar',{ static: false }) cerrar;
   @ViewChild('modalRegistro',{ static: false }) modalRegistro;
   @ViewChild('cerrarModalRegistro',{ static: false }) cerrarModalRegistro;
+  @ViewChild('modalPago',{ static: false }) modalPago;
+  @ViewChild('cerrarModalPago',{ static: false }) cerrarModalPago;
+  @ViewChild('modalBloqueo',{ static: false }) modalBloqueo;
+  @ViewChild('cerrarModalBloqueo',{ static: false }) cerrarModalBloqueo;
 
   constructor(public router:Router,
               private authService:SocialAuthService,
@@ -51,35 +57,44 @@ export class NavbarComponent implements OnInit {
             return
           }
           else if( datos['resultado'] == "OK"){
-
-            let usuario = JSON.parse(localStorage.getItem("usuario"));
-            usuario["id_usuario"] = datos["id_usuario"];
-            localStorage.setItem("usuario", JSON.stringify(usuario));
             this.cerrar.nativeElement.click();
+            let tipo = datos["estado"];
+            if(tipo == 2){
+              this.usuariosService.consultaNotificacionBloqueo(datos["id_usuario"]).subscribe( mensajes => {
+                this.mensaje = mensajes;
 
-            let estado = null;
-            this.usuariosService.consultaTipoUsuario(this.usuarioFB.id).subscribe( resultado => {
-              estado = resultado;
-              if(estado[0].tipo_usuario == 0){
-                this.modalRegistro.nativeElement.click();
-              }
-              else if( estado[0].tipo_usuario == 1){
+              });
+              this.modalBloqueo.nativeElement.click();
+            }else{
+              let usuario = JSON.parse(localStorage.getItem("usuario"));
+              usuario["id_usuario"] = datos["id_usuario"];
+              localStorage.setItem("usuario", JSON.stringify(usuario));
+              this.cerrar.nativeElement.click();
 
-                let usuario = JSON.parse(localStorage.getItem("usuario"));
-                usuario['correo'] = estado[0].correo;
-                usuario['celular'] = estado[0].celular;
+                if(tipo == 0){
+                  this.modalRegistro.nativeElement.click();
+                }else if(tipo == 1){
+                  this.usuariosService.consultaNotificacion(usuario["id_usuario"]).subscribe( chats => {
+                    let chat = chats["chat"];
+                    if(chat == -1){
+                      return
+                    }else{
+                      //navegar a el chat
+                    }
+                  });
+                }else{
+                  this.usuariosService.datosPago(usuario["id_usuario"]).subscribe( pago => {
+                    this.datospago = pago;
+                  });
 
-                localStorage.setItem("usuario", JSON.stringify(usuario));
+                }
 
-                return
-              }
-            });
+              (this.loggedIn) ? this.usuariosService.setEstadoSesion(true) : this.usuariosService.setEstadoSesion(false);
+              this.formRegistro.addControl('id', this.fb.control(null));
+              this.formRegistro.get('id').setValue(this.usuarioFB.id);
 
-            (this.loggedIn) ? this.usuariosService.setEstadoSesion(true) : this.usuariosService.setEstadoSesion(false);
-            this.formRegistro.addControl('id', this.fb.control(null));
-            this.formRegistro.get('id').setValue(this.usuarioFB.id);
-
-          }
+            }
+            }
         });
       }
     });
@@ -161,17 +176,18 @@ export class NavbarComponent implements OnInit {
             return
           }
           else if(datos['resultado'] == "OK"){
-
-            let usuario = JSON.parse(localStorage.getItem("usuario"));
-            usuario['correo'] = datos['correo'];
-            usuario['celular'] = datos['celular'];
-            localStorage.setItem("usuario", JSON.stringify(usuario));
-
             window.confirm("Registro completado con éxito.");
             this.cerrarModalRegistro.nativeElement.click();
           }
         })
       }
     });
+  }
+  realizarPago(){
+    console.log(this.datospago.value);
+  }
+
+  verChats(){
+    this.router.navigate(['']).
   }
 }

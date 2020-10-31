@@ -39,4 +39,8 @@ export class PerfilComponent implements OnInit {
   editarPerfil(){
     this.router.navigate(['editar-perfil'])
   }
+
+  verChats(){
+    this.router.navigate(['']).
+  }
 }
