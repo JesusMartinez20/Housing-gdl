@@ -12,11 +12,11 @@ export class CuartosService {
   url = environment.apiUrl+"/cuartos/";
 
   constructor(private http:HttpClient) { }
-/*
-  getBoletos( id_evento:number ){
-    return this.http.get(`${this.url}getBoletos.php?id_evento=${id_evento}`).pipe(retry(3))
-  }
 
+  getCuartos( id_casa:number ){
+    return this.http.get(`${this.url}verCuartosCasa.php?id_casa=${id_casa}`).pipe(retry(3))
+  }
+/*
   getBoleto( id_boleto:number ){
     return this.http.get(`${this.url}getBoleto.php?id_boleto=${id_boleto}`).pipe(retry(3))
   }

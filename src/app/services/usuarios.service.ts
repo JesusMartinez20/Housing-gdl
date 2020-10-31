@@ -43,6 +43,19 @@ export class UsuariosService {
   verVentas(id_usuario:number){
     return this.http.get(`${this.url}/datos/verDatosRenta.php?id_usuario=${id_usuario}`).pipe(retry(3))
   }
+  insertarComentario(comentario:string, cal_instalaciones:number, cal_limpieza:number, cal_ambiente:number, id_evento:number, id_usuario:number){
+    return this.http.get(`${this.url}/casas/comentario/insertarComentario.php?comentario=${comentario}&instalacion=${cal_instalaciones}&limpieza=${cal_limpieza}&ambiente=${cal_ambiente}&id_evento=${id_evento}&id_usuario=${id_usuario}`).pipe(retry(3))
+  }
+  eliminarComentrio(id_cal:number){
+    return this.http.get(`${this.url}/casas/comentario/eliminarComentario.php?id_calificacion=${id_cal}`).pipe(retry(3))
+  }
+  validarComentarios(id_usuario:Number, id_casa:Number){
+    return this.http.get(`${this.url}/casas/comentario/validarComentario.php?id_evento=${id_casa}&id_usuario=${id_usuario}`).pipe(retry(3))
+  }
+
+  comprobarComentarios(id_usuario:Number, id_casa:Number){
+    return this.http.get(`${this.url}/casas/comentario/comprobarComentario.php?id_evento=${id_casa}&id_usuario=${id_usuario}`).pipe(retry(3))
+  }
 
 
 
@@ -61,21 +74,11 @@ export class UsuariosService {
     return this.estadoS
   }
 
-  validarComentarios(id_usaurio:Number, id_evento:Number){
-    return this.http.get(`${this.url}ValidarComentario.php?id_evento=${id_evento}&id_usuario=${id_usaurio}`).pipe(retry(3))
-  }
 
-  comprobarComentarios(id_usaurio:Number, id_evento:Number){
-    return this.http.get(`${this.url}ComprobarComentario.php?id_evento=${id_evento}&id_usuario=${id_usaurio}`).pipe(retry(3))
-  }
 
-  insertarComentario(comentario:string, cal:number, id_evento:number, id_usuario:number){
-    return this.http.get(`${this.url}InsertarComentario.php?comentario=${comentario}&cal=${cal}&id_evento=${id_evento}&id_usuario=${id_usuario}`).pipe(retry(3))
-  }
 
-  eliminarComentrio(id_cal:number){
-    return this.http.get(`${this.url}EliminarComentario.php?id_cal=${id_cal}`).pipe(retry(3))
-  }
+
+
 
   elementosVenta(id_venta:number){
     return this.http.get(`${this.url}VerElementosVentaIndividual.php?id_venta=${id_venta}`).pipe(retry(3))

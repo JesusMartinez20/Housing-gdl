@@ -26,7 +26,7 @@
             </div>
             <hr>
             <hr>
-            <div class="container-fluid text-left">
+            <div class="container-fluid text-left" *ngIf="casa.instalaciones_cal == null">
               <!--
               <h4>Calificaciónes de la casa.</h4>
                 <h5>Instalaciones {{casa.instalaciones_cal}} </h5>
@@ -76,11 +76,105 @@
             </div>
         </div>
     </ng-container>
+
 -->
+<ng-container *ngIf="!noCuartos">
+  <div class="card mb-3 border-success" *ngFor="let cuarto of cuartos">
+      <div class="card-header border-success">
+          <div class="row">
+              <div class="col-md-6">
+                  <h4> {{cuarto.nombre_cuarto}} </h4>
+              </div>
+              <div class="col-md-6">
+                  <button class="btn btn-success float-right m-1" (click)="verCuarto( cuarto.id_cuarto )">Ver Mas</button>
+              </div>
+          </div>
+      </div>
+      <div class="card-body">
+          <div class="row h-100">
+              <div class="col-md-12">
+                  <h5>Descripción</h5>
+                  <p> {{cuarto.descripcion_cuarto}} </p>
+              </div>
+          </div>
+      </div>
+  </div>
+</ng-container>
     <div class="card">
         <div class="card-header">
             <h4>Comentarios.</h4>
         </div>
+        <div class="card-footer" *ngIf="comentar != false">
+          <div class="row mt-2">
+            <h5>Califique la casa</h5>
+            <br>
+              <div class="col-md-3 text-center">
+                <h6>Instalaciones<small> (1 - 10)</small></h6>
+                  <div class="input-group inline-group m-0 p-0 justify-content-center align-items-center">
+                      <div class="input-group-prepend">
+                          <button class="btn btn-outline-secondary btn-minus" (click)="cal_instalaciones.stepDown()">
+                            <i class="fa fa-minus"></i>
+                          </button>
+                      </div>
+                      <div class="w-25 m-0">
+                          <input #cal_instalaciones class="form-control quantity text-center" min="1" max="10" value="1" step="1" type="number" disabled>
+                      </div>
+                      <div class="input-group-append">
+                          <button class="btn btn-outline-secondary btn-plus" (click)="cal_instalaciones.stepUp()">
+                            <i class="fa fa-plus"></i>
+                          </button>
+                      </div>
+                  </div>
+                  <h6>Ambiente<small> (1 - 10)</small></h6>
+                  <div class="input-group inline-group m-0 p-0 justify-content-center align-items-center">
+                    <div class="input-group-prepend">
+                        <button class="btn btn-outline-secondary btn-minus" (click)="cal_ambiente.stepDown()">
+                          <i class="fa fa-minus"></i>
+                        </button>
+                    </div>
+                    <div class="w-25 m-0">
+                        <input #cal_ambiente class="form-control quantity text-center" min="1" max="10" value="1" step="1" type="number" disabled>
+                    </div>
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary btn-plus" (click)="cal_ambiente.stepUp()">
+                          <i class="fa fa-plus"></i>
+                        </button>
+                    </div>
+                  </div>
+                  <h6>Limpieza<small> (1 - 10)</small></h6>
+                  <div class="input-group inline-group m-0 p-0 justify-content-center align-items-center">
+                    <div class="input-group-prepend">
+                        <button class="btn btn-outline-secondary btn-minus" (click)="cal_limpieza.stepDown()">
+                          <i class="fa fa-minus"></i>
+                        </button>
+                    </div>
+                    <div class="w-25 m-0">
+                        <input #cal_limpieza class="form-control quantity text-center" min="1" max="10" value="1" step="1" type="number" disabled>
+                    </div>
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary btn-plus" (click)="cal_limpieza.stepUp()">
+                          <i class="fa fa-plus"></i>
+                        </button>
+                    </div>
+                  </div>
+              </div>
+              <div class="col-md-7">
+                  <div class="input-group input-group-sm">
+                      <textarea style="resize: none;" class="form-control" cols="290" rows="3" placeholder="Agrega un Comentario" #comentar (keyup.enter)="insertarComentario(comentar.value, cal_instalaciones.value, cal_ambiente.value, cal_limpieza.value)"></textarea>
+                  </div>
+              </div>
+              <div class="col-md-2">
+                  <button class="btn btn-outline-primary mx-auto mt-4" type="button" (click)="insertarComentario(comentar.value, cal_instalaciones.value, cal_ambiente.value, cal_limpieza.value)">
+                    Comentar
+                  </button>
+              </div>
+          </div>
+          <div class="row">
+              <div class="col-md-10 d-block mx-auto text-center">
+                  <small>Sólo puede comentar una vez. Exprese bien su opinión en un solo comentario.</small>
+              </div>
+          </div>
+      </div>
         <div class="card-body">
             <h5 class="text-danger" *ngIf="sinComentarios == true"> No hay comentarios. </h5>
             <ng-container *ngIf="sinComentarios == false">
@@ -88,11 +182,13 @@
                     <div class="card-body">
                         <div class="row h-100">
                             <div class="col-md-2 text-center my-auto">
-                                <h6>{{ comentario.nombre_usuario }}</h6>
-                                <h5>{{ comentario.num_calificacion }} Puntos</h5>
+                                <h6>{{ comentario.fk_usuario }}</h6>
+                                <h5>Instalaciones: {{ comentario.limpieza }} Puntos</h5>
+                                <h5>Ambiente: {{ comentario.ambiente }} Puntos</h5>
+                                <h5>Limpieza: {{ comentario.instalaciones }} Puntos</h5>
                             </div>
                             <div class="col-md-8 text-left">
-                                <p>{{ comentario.opinion }}</p>
+                                <p>{{ comentario.comentario }}</p>
                             </div>
                             <div class="col-md-2 my-auto">
                                 <button type="button" class="btn btn-danger mx-auto my-auto d-block" *ngIf="comentario.eliminar == true" (click)="eliminarComentario(comentario.id_calificacion)">X</button>
@@ -101,77 +197,6 @@
                     </div>
                 </div>
             </ng-container>
-        </div>
-        <div class="card-footer" *ngIf="comentar != false">
-            <div class="row mt-2">
-              <h5>Califique la casa</h5>
-              <br>
-                <div class="col-md-3 text-center">
-                  <h6>Instalaciones<small> (1 - 10)</small></h6>
-                    <div class="input-group inline-group m-0 p-0 justify-content-center align-items-center">
-                        <div class="input-group-prepend">
-                            <button class="btn btn-outline-secondary btn-minus" (click)="cal.stepDown()">
-                              <i class="fa fa-minus"></i>
-                            </button>
-                        </div>
-                        <div class="w-25 m-0">
-                            <input #cal class="form-control quantity text-center" min="1" max="10" value="1" step="1" type="number" disabled>
-                        </div>
-                        <div class="input-group-append">
-                            <button class="btn btn-outline-secondary btn-plus" (click)="cal.stepUp()">
-                              <i class="fa fa-plus"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <h6>Ambiente<small> (1 - 10)</small></h6>
-                    <div class="input-group inline-group m-0 p-0 justify-content-center align-items-center">
-                      <div class="input-group-prepend">
-                          <button class="btn btn-outline-secondary btn-minus" (click)="cal.stepDown()">
-                            <i class="fa fa-minus"></i>
-                          </button>
-                      </div>
-                      <div class="w-25 m-0">
-                          <input #cal class="form-control quantity text-center" min="1" max="10" value="1" step="1" type="number" disabled>
-                      </div>
-                      <div class="input-group-append">
-                          <button class="btn btn-outline-secondary btn-plus" (click)="cal.stepUp()">
-                            <i class="fa fa-plus"></i>
-                          </button>
-                      </div>
-                  </div>
-                    <h6>Limpieza<small> (1 - 10)</small></h6>
-                    <div class="input-group inline-group m-0 p-0 justify-content-center align-items-center">
-                      <div class="input-group-prepend">
-                          <button class="btn btn-outline-secondary btn-minus" (click)="cal.stepDown()">
-                            <i class="fa fa-minus"></i>
-                          </button>
-                      </div>
-                      <div class="w-25 m-0">
-                          <input #cal class="form-control quantity text-center" min="1" max="10" value="1" step="1" type="number" disabled>
-                      </div>
-                      <div class="input-group-append">
-                          <button class="btn btn-outline-secondary btn-plus" (click)="cal.stepUp()">
-                            <i class="fa fa-plus"></i>
-                          </button>
-                      </div>
-                  </div>
-                </div>
-                <div class="col-md-7">
-                    <div class="input-group input-group-sm">
-                        <textarea style="resize: none;" class="form-control" cols="290" rows="3" placeholder="Agrega un Comentario" #comentar (keyup.enter)="insertarComentario(comentar.value, cal.value)"></textarea>
-                    </div>
-                </div>
-                <div class="col-md-2">
-                    <button class="btn btn-outline-primary mx-auto mt-4" type="button" (click)="insertarComentario(comentar.value, cal.value)">
-                      Comentar
-                    </button>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-10 d-block mx-auto text-center">
-                    <small>Sólo puede comentar una vez. Exprese bien su opinión en un solo comentario.</small>
-                </div>
-            </div>
         </div>
     </div>
 </div>

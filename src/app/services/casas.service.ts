@@ -40,7 +40,7 @@ export class CasasService {
 
 
   getComentarios(id_casa:Number){
-    return this.http.get(`${this.url}/casas/comentarios/VerComentarios.php?id_casa=${id_casa}`).pipe(retry(3))
+    return this.http.get(`${this.url}/casas/comentario/VerComentarios.php?id_casa=${id_casa}`).pipe(retry(3))
   }
 
   filtrarCasas( filtro:any ){
