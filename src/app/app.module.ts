@@ -23,14 +23,11 @@ import { PublicacionViewComponent } from './components/publicacion-view/publicac
 import { HistorialComprasComponent } from './components/historial-compras/historial-compras.component';
 import { CompraInfoComponent } from './components/compra-info/compra-info.component';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
-import { CarritoComponent } from './components/carrito/carrito.component';
-import { CompraComponent } from './components/compra/compra.component';
 
 import { CasasService } from './services/casas.service';
 import { PublicacionesService } from './services/publicaciones.service';
 import { CuartosService } from './services/cuartos.service';
 import { UsuariosService } from './services/usuarios.service';
-import { PagoComponent } from './components/pago/pago.component';
 import { VentasService } from './services/ventas.service';
 import { PerfilEditarComponent } from './components/perfil-editar/perfil-editar.component';
 
@@ -50,9 +47,6 @@ import { PerfilEditarComponent } from './components/perfil-editar/perfil-editar.
     PublicacionViewComponent,
     HistorialComprasComponent,
     CompraInfoComponent,
-    CarritoComponent,
-    CompraComponent,
-    PagoComponent,
     PerfilEditarComponent,
   ],
   imports: [
