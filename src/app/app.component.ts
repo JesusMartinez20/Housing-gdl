@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {environment} from "../environments/environment";
-
+import {} from 'googlemaps';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
