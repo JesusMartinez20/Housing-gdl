@@ -9,7 +9,7 @@ import {environment} from 'src/environments/environment'
 export class CuartosService {
 
   // url = "https://proyectotapatio.com/PT-API-P/boletos/";
-  url = environment.apiUrl+"/cuartos/";
+  url = environment.apiUrl+"/casas/cuartos/";
 
   constructor(private http:HttpClient) { }
 
