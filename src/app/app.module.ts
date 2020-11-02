@@ -30,6 +30,7 @@ import { CuartosService } from './services/cuartos.service';
 import { UsuariosService } from './services/usuarios.service';
 import { VentasService } from './services/ventas.service';
 import { PerfilEditarComponent } from './components/perfil-editar/perfil-editar.component';
+import { CuartoComponent } from './components/cuarto/cuarto.component';
 
 
 @NgModule({
@@ -48,6 +49,7 @@ import { PerfilEditarComponent } from './components/perfil-editar/perfil-editar.
     HistorialComprasComponent,
     CompraInfoComponent,
     PerfilEditarComponent,
+    CuartoComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,79 @@
+<div class="container-fluid animated fadeIn fast mt-2">
+
+  <div class="card mb-3">
+      <div class="card-header text-center">
+          <h4>Vista Previa</h4>
+      </div>
+      <div class="card-body">
+          <div class="card mb-3 border-primary">
+              <div class="card-header border-primary text-center">
+                  <h4> {{ cuarto.nombre_cuarto}} </h4>
+              </div>
+              <div class="pt-4 text-center mb-3">
+                  <h4>Imagen Principal.</h4>
+                  <img [src]="imgUrl+cuarto.principal_img" alt="img_principal" class="figure-img img-fluid rounded mx-auto" width="950" height="650">
+              </div>
+              <div class="card-body text-center">
+                  <h4>Imágenes Generales.</h4>
+                  <owl-carousel-o [options]="customOptions">
+                      <ng-template carouselSlide *ngFor="let img of imgs">
+                          <div class="slide">
+                              <img [src]="imgUrl+img.ruta_imagen_cuarto" alt="imgs" width="300" height="300" class="p-1 figure-img rounded">
+                          </div>
+                      </ng-template>
+                  </owl-carousel-o>
+                  <hr>
+                  <div class="container-fluid text-left">
+                      <h4>Descripción.</h4>
+                      <p> {{cuarto.descripcion_cuarto}} </p>
+                  </div>
+                  <hr>
+              </div>
+          </div>
+
+      </div>
+  </div>
+
+  <div class="card mb-3 border-primary">
+    <div class="card-header border-primary">
+        <h4>Oferta</h4>
+    </div>
+  <div class="input-group form-row mb-3">
+    <div class="col-md-12">
+        <label for="semestre">Semestre:</label>
+        <select id="semestre" class="form-control" (change)="getOferta($event.target.value)">
+          <option value="" selected>Elija un Semestre</option>
+          <option *ngFor="let semestre of semestres; let i=i ndex" [value]="semestre.id_semestre"> {{semestre.nombre}} </option>
+        </select>
+    </div>
+</div>
+<br>
+<div class="card-body" >
+          <div class="col-md-3">
+            <label for="precio" class="form-text text-danger">No existe oferta en el semestre indicado</label>
+          </div>
+          <br>
+</div>
+<div class="card-body" *ngIf="oferta.tipo==1">
+      <br>
+      <div class="input-group form-row mb-6">
+          <div class="col-md-12">
+              <label for="descCasa">Precio: ${{oferta.precio}}</label>
+          </div>
+      </div>
+      <hr>
+      <div class="input-group form-row mb-3">
+          <div class="col-md-12 text-center">
+            <!--<button class="btn btn-danger ml-lg-2" type="button" (click)="eliminarOferta( oferta.fk_oferta )">Preguntar</button>-->
+          </div>
+      </div>
+</div>
+<div class="card-body" *ngIf="oferta.tipo==2">
+      <div class="form-row mb-12">
+          <div class="col-md-4">
+              <label for="nombreusuario">Nombre Usuario: {{oferta.nombre_usuario}}</label>
+          </div>
+
+      </div>
+</div>
+</div>

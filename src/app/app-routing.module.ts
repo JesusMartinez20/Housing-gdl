@@ -11,6 +11,7 @@ import { PublicacionViewComponent } from './components/publicacion-view/publicac
 import { HistorialComprasComponent } from './components/historial-compras/historial-compras.component';
 import { CompraInfoComponent } from './components/compra-info/compra-info.component';
 import { PerfilEditarComponent } from './components/perfil-editar/perfil-editar.component';
+import { CuartoComponent } from './components/cuarto/cuarto.component';
 
 const routes: Routes = [
   { path: 'inicio', component: InicioComponent },
@@ -24,6 +25,7 @@ const routes: Routes = [
   { path: 'publicacion/:id', component: PublicacionViewComponent },
   { path: 'historial', component: HistorialComprasComponent },
   { path: 'info-compra/:id', component: CompraInfoComponent },
+  { path: 'cuarto/:id', component: CuartoComponent },
   { path: '**', pathMatch: 'full', redirectTo: 'inicio' }
 ];
 
