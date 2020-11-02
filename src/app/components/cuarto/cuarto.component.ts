@@ -5,6 +5,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { CasasService } from '../../services/casas.service';
 import { environment } from 'src/environments/environment'
+import { ChatService } from '../../services/chat.service';
 
 @Component({
   selector: 'app-cuarto',
@@ -19,6 +20,8 @@ export class CuartoComponent implements OnInit {
   imgs:any = [];
   id_cuarto:number = null;
   oferta:any = [];
+  id_usuario = null;
+  chatactivo = null;
 
   public customOptions: OwlOptions = {
     loop: true,
@@ -45,11 +48,22 @@ export class CuartoComponent implements OnInit {
     nav: true
   }
 
+  enviarForm: FormGroup;
+
   constructor(private activatedRoute:ActivatedRoute,
     private cuartosService:CuartosService,
-    private fb:FormBuilder,) { }
+    private fb:FormBuilder,
+    private chatService:ChatService) { }
 
+    formEnviarInit(){
+      this.enviarForm = this.fb.group({
+        enviarInput:[],
+      })
+    }
     ngOnInit() {
+      let usuario = JSON.parse(localStorage.getItem("usuario"));
+      this.id_usuario = usuario["id_usuario"];
+      this.formEnviarInit();
       this.activatedRoute.params.subscribe( params => {
         this.cuartosService.getCuarto(params['id']).subscribe( resultado => {
 
@@ -71,14 +85,31 @@ export class CuartoComponent implements OnInit {
 
 
   getOferta( event:any ){
-    this.id_semestre = event
+    this.id_semestre = event;
     if(this.id_semestre != null){
       this.cuartosService.getOferta(this.id_semestre, this.id_cuarto).subscribe( resultado => this.oferta = resultado)
+      this.chatService.comprobarChat(this.id_usuario).subscribe( resultado => this.chatactivo = resultado)
     }
     else{
       return
     }
   }
+
+  crearChat(id_oferta:number){
+
+    let msg:string=this.enviarForm.get('enviarInput').value;
+    if(msg.length>=10){
+      this.chatService.crearChat(this.id_usuario, id_oferta, msg).subscribe(res=>{
+        this.enviarForm.patchValue({enviarInput:''})
+        let id_chat=res;
+      })
+    }else{
+      window.alert("El mensaje debe de ser mayor a 10 caracteres")
+    }
+
+  }
+
+
 
 
 }

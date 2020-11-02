@@ -21,8 +21,8 @@
     </div>
     <div class="chat">
         <div *ngFor="let msg of msgs" style="display:flex" [ngClass]="{
-            'chatSend':msg.usuario === '1',
-            'chatRecieved':msg.usuario === '0'
+            'chatSend':msg.usuario === '0',
+            'chatRecieved':msg.usuario === '1'
           }" >
             <p class="chatStyle " >
                 {{msg.mensaje}}

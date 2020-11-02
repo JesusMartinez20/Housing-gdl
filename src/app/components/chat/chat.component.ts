@@ -123,22 +123,28 @@ export class ChatComponent implements OnInit {
   cancelar(){
     if (window.confirm("Está seguro de querer cancelar la conversación")) {
       let msg=this.enviarForm.get('enviarInput').value;
+      if(msg.length>=10){
       this.chatService.cancelarChat(this.idChat,msg).subscribe(res=>{
         console.log(res)
         location.reload();
       })
+    }else{
+      window.alert("El mensaje debe de ser mayor a 10 caracteres")
     }
   }
-
+  }
   bloquear(){
-    if (window.confirm("Está seguro de querer bloquear la conversación")) {
     let msg=this.enviarForm.get('enviarInput').value;
-    this.chatService.bloquearChat(this.idChat,msg).subscribe(res=>{
+    if (window.confirm("Está seguro de querer bloquear la conversación")) {
+    if(msg.length>=10){
+      this.chatService.bloquearChat(this.idChat,msg).subscribe(res=>{
       console.log(res)
       location.reload();
-    })
+      })
+      }else{
+        window.alert("El mensaje debe de ser mayor a 10 caracteres")
+      }
+    }
   }
-  }
-
 }
 

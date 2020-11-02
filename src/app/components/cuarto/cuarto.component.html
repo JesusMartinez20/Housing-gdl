@@ -63,8 +63,11 @@
       </div>
       <hr>
       <div class="input-group form-row mb-3">
-          <div class="col-md-12 text-center">
-            <!--<button class="btn btn-danger ml-lg-2" type="button" (click)="eliminarOferta( oferta.fk_oferta )">Preguntar</button>-->
+          <div class="col-md-12 text-center" *ngIf="chatactivo==null">
+            <!--<button class="btn btn-danger ml-lg-2" type="button" (click)="crearChat( oferta.fk_oferta )">Preguntar</button>-->
+          </div>
+          <div class="col-md-12 text-center" *ngIf="chatactivo!=null">
+            <label for="precio" class="form-text text-danger">Usted ya tiene un chat activo</label>
           </div>
       </div>
 </div>
