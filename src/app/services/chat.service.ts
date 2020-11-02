@@ -22,12 +22,16 @@ cancelarChat( id_chat:number, mensaje:string){
   return this.http.get(`${this.url}cancelarChat.php?id_chat=${id_chat}&mensaje=${mensaje}`)//.pipe(retry(3))
 }
 
+bloquearChat( id_chat:number, mensaje:string){
+  return this.http.get(`${this.url}bloquearChat.php?id_chat=${id_chat}&mensaje=${mensaje}`)//.pipe(retry(3))
+}
+
 enviarMensaje(id_chat:number, mensaje:string){
   return this.http.get(`${this.url}enviarMensaje.php?id_chat=${id_chat}&mensaje=${mensaje}`)//.pipe(retry(3))
 }
 
-verChats(){
-  return this.http.get(`${this.url}verChats.php`)//.pipe(retry(3))
+verChats(id_usuario:number){
+  return this.http.get(`${this.url}verChats.php?id_usuario=${id_usuario}`)//.pipe(retry(3))
 }
 
 verDatosChat(id_chat:number){

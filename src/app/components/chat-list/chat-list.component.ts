@@ -39,27 +39,28 @@ export class ChatListComponent implements OnInit {
   ]*/
 
   users:any=[];
+  chatId=null;
+  foto=null;
+  usuario:any = null;
 
   constructor(private router: Router, private chatService:ChatService) { }
 
   ngOnInit(): void {
-    this.chatService.verChatsNotificacion().subscribe( resultado => {
+    this.usuario = JSON.parse(localStorage.getItem("usuario"));
+    this.foto = this.usuario.photoUrl;
+    this.chatService.verChats(this.usuario.id_usuario).subscribe( resultado => {
       console.log(resultado)
       this.users=resultado
     });
   }
 
-  chatId=null;
+
 
   chat(id: number) {
     //this.router.navigate(['chat-list/chat', id]);
     console.log(id)
     this.chatId=id
     this.router.navigate(['chat', id])
-  }
-
-  receiveMessage($event) {
-    this.chatId = $event
   }
 
 

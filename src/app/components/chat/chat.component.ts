@@ -82,7 +82,7 @@ export class ChatComponent implements OnInit {
 
   constructor(private chatService:ChatService,private activatedRoute: ActivatedRoute,private fb:FormBuilder,) {
    }
-  
+
   ngOnInit(): void {
     this.formEnviarInit()
     this.activatedRoute.params.subscribe(params => {
@@ -96,7 +96,7 @@ export class ChatComponent implements OnInit {
       })
       this.chatService.cambiarEstadoNotificacion(params['id'])
     });
-    
+
   }
 
   formEnviarInit(){
@@ -117,7 +117,7 @@ export class ChatComponent implements OnInit {
     }else{
       window.alert("El mensaje debe de ser mayor a 10 caracteres")
     }
-    
+
   }
 
   cancelar(){
@@ -134,15 +134,6 @@ export class ChatComponent implements OnInit {
     if (window.confirm("Está seguro de querer bloquear la conversación")) {
     let msg=this.enviarForm.get('enviarInput').value;
     this.chatService.bloquearChat(this.idChat,msg).subscribe(res=>{
-      console.log(res)
-      location.reload();
-    })
-  }
-  }
-
-  confirmarCompra(){
-    if (window.confirm("Está seguro de querer confirmar la compra")) {
-    this.chatService.confirmarCompra(this.idChat).subscribe(res=>{
       console.log(res)
       location.reload();
     })

@@ -12,13 +12,10 @@
     <div class="card" style="width: 100%" *ngIf="datos.estado_chat=='Activo'">
         <div style="display: flex; justify-content: space-evenly;" class="card-body">
             <button (click)="bloquear()" type="button" class="btn btn-danger">
-                Bloquear 
+                Bloquear
             </button>
             <button (click)="cancelar()" type="button" class="btn btn-warning">
-                Cancelar   
-            </button>
-            <button (click)="confirmarCompra()" type="button" class="btn btn-info">
-                Confirmar compra    
+                Cancelar
             </button>
         </div>
     </div>
@@ -37,8 +34,8 @@
     <form style="width: 100%;display: flex;" [formGroup]="enviarForm" (ngSubmit)="enviarMensaje()">
         <input type="text" class="form-control" placeholder="Escriba algo..." aria-label="Username" formControlName="enviarInput" aria-describedby="basic-addon1">
         <button type="submit" class="btn btn-primary" >
-            <i class="fas fa-paper-plane"></i>    
+            <i class="fas fa-paper-plane"></i>
         </button>
     </form>
-    
+
 </div>

@@ -56,14 +56,8 @@ export class UsuariosService {
   comprobarComentarios(id_usuario:Number, id_casa:Number){
     return this.http.get(`${this.url}casas/comentario/comprobarComentario.php?id_evento=${id_casa}&id_usuario=${id_usuario}`).pipe(retry(3))
   }
-
-
-
-
-
-
-  getUsuario(id_fb:string, id_usuario:number=null){
-    return this.http.get(`${this.url}getUsuario.php?id_fb=${id_fb}&id_usuario=${id_usuario}`).pipe(retry(3))
+  getUsuario(id:string){
+    return this.http.get(`${this.url}login/getUsuario.php?id_fb=${id}S`).pipe(retry(3))
   }
 
   setEstadoSesion( estado:boolean ){
@@ -73,7 +67,10 @@ export class UsuariosService {
   getEstadoSesion(){
     return this.estadoS
   }
-
+  editarInformacion(info:any){
+    const INFO = serialize(info);
+    return this.http.post(`${this.url}login/editarUsuario.php`, INFO).pipe(retry(3))
+  }
 
 
 
@@ -84,10 +81,7 @@ export class UsuariosService {
     return this.http.get(`${this.url}VerElementosVentaIndividual.php?id_venta=${id_venta}`).pipe(retry(3))
   }
 
-  editarInformacion(info:any){
-    const INFO = serialize(info);
-    return this.http.post(`${this.url}editarUsuario.php`, INFO).pipe(retry(3))
-  }
+
 
   verificarPago(id_venta:number, id_usuario:number ){
     return this.http.get(`${this.url}verificarPago.php?id_venta=${id_venta}&id_usuario=${id_usuario}`).pipe(retry(3))
