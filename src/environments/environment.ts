@@ -5,11 +5,11 @@
 export const environment = {
   production: true,
   // apiUrl:'http://localhost/casas-php/PT-API-P/cliente/',
-  apiUrl:'http://localhost:8080/C-API/cliente/',
+  apiUrl:'http://localhost:80/casas-php/C-API-P/cliente/',
   // imgUrl:'http://localhost/casas-php/admin/assets/img/casas/',
-  imgUrl:'http://localhost:8080/C-API/admin/assets/img/casas/',
+  imgUrl:'http://localhost:80/casas-php/C-API-P/admin/assets/img/casas/',
   // imgUrlPublicacion:'http://localhost/casas-php/admin/assets/img/publicaciones/'
-  imgUrlPublicacion:'http://localhost:8080/C-API/admin/assets/img/publicaciones/'
+  imgUrlPublicacion:'http://localhost:80/casas-php/C-API-P/admin/assets/img/publicaciones/'
 
 };
 

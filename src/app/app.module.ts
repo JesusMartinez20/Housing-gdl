@@ -33,6 +33,8 @@ import { UsuariosService } from './services/usuarios.service';
 import { PagoComponent } from './components/pago/pago.component';
 import { VentasService } from './services/ventas.service';
 import { PerfilEditarComponent } from './components/perfil-editar/perfil-editar.component';
+import { ChatListComponent } from './chat-list/chat-list.component';
+import { ChatComponent } from './chat/chat.component';
 
 
 @NgModule({
@@ -54,6 +56,8 @@ import { PerfilEditarComponent } from './components/perfil-editar/perfil-editar.
     CompraComponent,
     PagoComponent,
     PerfilEditarComponent,
+    ChatListComponent,
+    ChatComponent,
   ],
   imports: [
     BrowserModule,
