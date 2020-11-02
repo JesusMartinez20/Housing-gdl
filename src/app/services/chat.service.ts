@@ -9,7 +9,6 @@ import {environment} from 'src/environments/environment'
 })
 export class ChatService {
 
-// url = "https://proyectotapatio.com/PT-API-P/repartidores/";
 url = environment.apiUrl+"casas/chat/";
 
 constructor(private http:HttpClient) { }

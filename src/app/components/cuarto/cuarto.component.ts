@@ -101,7 +101,7 @@ export class CuartoComponent implements OnInit {
     if(msg.length>=10){
       this.chatService.crearChat(this.id_usuario, id_oferta, msg).subscribe(res=>{
         this.enviarForm.patchValue({enviarInput:''})
-        let id_chat=res;
+        let id_chat=res["id_chat"];
       })
     }else{
       window.alert("El mensaje debe de ser mayor a 10 caracteres")
