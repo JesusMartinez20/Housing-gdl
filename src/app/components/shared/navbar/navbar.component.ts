@@ -16,6 +16,7 @@ export class NavbarComponent implements OnInit {
   loggedIn:boolean = false;
   mensaje = null;
   datospago = null;
+  id_usuario = null;
 
   formRegistro:FormGroup;
 
@@ -70,6 +71,7 @@ export class NavbarComponent implements OnInit {
             }else{
               let usuario = JSON.parse(localStorage.getItem("usuario"));
               usuario["id_usuario"] = datos["id_usuario"];
+              this.id_usuario = usuario["id_usuario"];
               localStorage.setItem("usuario", JSON.stringify(usuario));
 
               if(tipo == 0){
@@ -171,7 +173,7 @@ export class NavbarComponent implements OnInit {
         return
       }
       else if(datos['estado'] == 1){
-        this.usuariosService.terminarRegistro(this.formRegistro.value, this.usuarioFB.firstName, this.usuarioFB.lastName).subscribe( datos => {
+        this.usuariosService.terminarRegistro(this.formRegistro.value, this.id_usuario).subscribe( datos => {
           if(datos['resultado'] == "ERROR"){
             window.confirm("Ocurrio un error. Inténtelo más tarde.");
             return
@@ -192,4 +194,5 @@ export class NavbarComponent implements OnInit {
   verChats(){
     // this.router.navigate(['']).
   }
+
 }

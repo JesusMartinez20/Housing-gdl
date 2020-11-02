@@ -21,9 +21,9 @@ export class UsuariosService {
     return this.http.post(`${this.url}login/inicioSesion.php`, USUARIO_FD).pipe(retry(3))
   }
 
-  terminarRegistro( datos:any, nombre:string, apellido:string ){
+  terminarRegistro( datos:any, id:number){
     const DATOS_REG = serialize(datos);
-    return this.http.post(`${this.url}login/terminarRegistro.php?nombre=${nombre}&apellido=${apellido}`, DATOS_REG).pipe(retry(3))
+    return this.http.post(`${this.url}login/terminarRegistro.php?id_usuario=${id}`, DATOS_REG).pipe(retry(3))
   }
 
   consultaNotificacion( id:string ){
