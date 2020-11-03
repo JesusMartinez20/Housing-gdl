@@ -10,10 +10,10 @@ import { PerfilComponent } from './components/perfil/perfil.component';
 import { PublicacionViewComponent } from './components/publicacion-view/publicacion-view.component';
 import { HistorialComprasComponent } from './components/historial-compras/historial-compras.component';
 import { CompraInfoComponent } from './components/compra-info/compra-info.component';
-import { CarritoComponent } from './components/carrito/carrito.component';
-import { CompraComponent } from './components/compra/compra.component';
-import { PagoComponent } from './components/pago/pago.component';
 import { PerfilEditarComponent } from './components/perfil-editar/perfil-editar.component';
+import { ChatListComponent } from './components/chat-list/chat-list.component';
+import { ChatComponent } from './components/chat/chat.component';
+import { CuartoComponent } from './components/cuarto/cuarto.component';
 
 const routes: Routes = [
   { path: 'inicio', component: InicioComponent },
@@ -27,9 +27,9 @@ const routes: Routes = [
   { path: 'publicacion/:id', component: PublicacionViewComponent },
   { path: 'historial', component: HistorialComprasComponent },
   { path: 'info-compra/:id', component: CompraInfoComponent },
-  { path: 'carrito', component: CarritoComponent },
-  { path: 'compra', component: CompraComponent },
-  { path: 'pago', component: PagoComponent },
+  { path: 'chat-list', component: ChatListComponent },
+  { path: 'chat:id', component: ChatComponent },
+  { path: 'cuarto/:id', component: CuartoComponent },
   { path: '**', pathMatch: 'full', redirectTo: 'inicio' }
 ];
 

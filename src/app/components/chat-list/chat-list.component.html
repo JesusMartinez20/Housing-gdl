@@ -1,0 +1,13 @@
+<div class=chat-container>
+    <div class="chat-list">
+        <div *ngFor="let user of users">
+            <a (click)="chat(user.id_chat)" class="chat-div">
+                <img src="{{foto}}" alt="" class="profile-pic">
+                <div>
+                    <p>Creacion: {{user.creacion_chat}}</p>
+                    <p>Estado: {{user.estado_chat}}</p>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
