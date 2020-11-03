@@ -82,7 +82,7 @@ export class NavbarComponent implements OnInit {
                   if(chat == -1){
                     return
                   }else{
-                    //navegar a el chat
+                    this.router.navigate(['chat', chat])
                   }
                 });
               }else{
