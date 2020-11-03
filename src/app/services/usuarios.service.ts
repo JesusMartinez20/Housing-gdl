@@ -50,11 +50,11 @@ export class UsuariosService {
     return this.http.get(`${this.url}casas/comentario/eliminarComentario.php?id_calificacion=${id_cal}`).pipe(retry(3))
   }
   validarComentarios(id_usuario:Number, id_casa:Number){
-    return this.http.get(`${this.url}casas/comentario/validarComentario.php?id_evento=${id_casa}&id_usuario=${id_usuario}`).pipe(retry(3))
+    return this.http.get(`${this.url}casas/comentario/validarComentario.php?id_casa=${id_casa}&id_usuario=${id_usuario}`).pipe(retry(3))
   }
 
   comprobarComentarios(id_usuario:Number, id_casa:Number){
-    return this.http.get(`${this.url}casas/comentario/comprobarComentario.php?id_evento=${id_casa}&id_usuario=${id_usuario}`).pipe(retry(3))
+    return this.http.get(`${this.url}casas/comentario/comprobarComentario.php?id_casa=${id_casa}&id_usuario=${id_usuario}`).pipe(retry(3))
   }
   getUsuario(id:string){
     return this.http.get(`${this.url}login/getUsuario.php?id_fb=${id}S`).pipe(retry(3))

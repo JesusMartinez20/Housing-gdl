@@ -59,24 +59,28 @@ export class NavbarComponent implements OnInit {
           }
           else if( datos['resultado'] == "OK")
           {
+
+            let usuario = JSON.parse(localStorage.getItem("usuario"));
+            usuario["id_usuario"] = datos["id_usuario"];
+            localStorage.setItem("usuario", JSON.stringify(usuario));
+            this.id_usuario = usuario["id_usuario"];
             let tipo = datos["estado"];
             console.log(tipo);
             this.cerrar.nativeElement.click();
             if(tipo == 2){
               this.usuariosService.consultaNotificacionBloqueo(datos["id_usuario"]).subscribe( resultado => {
                 this.mensaje = resultado['mensaje'];
-
+                window.confirm(resultado['mensaje']);
               });
-              this.modalBloqueo.nativeElement.click();
+
+              this.logOut();
+              //this.modalBloqueo.nativeElement.click();
             }else{
-              let usuario = JSON.parse(localStorage.getItem("usuario"));
-              usuario["id_usuario"] = datos["id_usuario"];
-              this.id_usuario = usuario["id_usuario"];
-              localStorage.setItem("usuario", JSON.stringify(usuario));
 
               if(tipo == 0){
                 this.modalRegistro.nativeElement.click();
               }else if(tipo == 1){
+                this.usuariosService.setEstadoSesion(true);
                 this.usuariosService.consultaNotificacion(usuario["id_usuario"]).subscribe( chats => {
                   let chat = chats["chat"];
                   if(chat == -1){
@@ -86,6 +90,7 @@ export class NavbarComponent implements OnInit {
                   }
                 });
               }else{
+                this.usuariosService.setEstadoSesion(true);
                 this.usuariosService.datosPago(usuario["id_usuario"]).subscribe( pago => {
                   this.datospago = pago;
                 });
@@ -180,6 +185,7 @@ export class NavbarComponent implements OnInit {
           }
           else if(datos['resultado'] == "OK"){
             window.confirm("Registro completado con éxito.");
+            this.usuariosService.setEstadoSesion(true);
             this.formRegistro.reset();
             this.cerrarModalRegistro.nativeElement.click();
           }

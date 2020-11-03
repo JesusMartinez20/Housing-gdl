@@ -8,8 +8,7 @@ import { ChatService } from 'src/app/services/chat.service';
 
 @Component({
   selector: 'app-modal-chat',
-  templateUrl: './modal-chat.component.html',
-  styleUrls: ['./modal-chat.component.css']
+  templateUrl: './modal-chat.component.html'
 })
 export class ModalChatComponent implements OnInit {
   enviarForm: FormGroup;

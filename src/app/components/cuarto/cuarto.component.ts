@@ -8,6 +8,7 @@ import { environment } from 'src/environments/environment'
 import { ChatService } from '../../services/chat.service';
 import { MDBModalRef, MDBModalService } from 'ng-uikit-pro-standard';
 import { ModalChatComponent } from '../modal-chat/modal-chat.component';
+import {UsuariosService} from '../../services/usuarios.service';
 
 @Component({
   selector: 'app-cuarto',
@@ -15,6 +16,8 @@ import { ModalChatComponent } from '../modal-chat/modal-chat.component';
 })
 export class CuartoComponent implements OnInit {
 
+  loggedIn: boolean = false;
+  ver: boolean = false;
   imgUrl = environment.imgUrl;
   cuarto:any = {};
   id_semestre:number = null;
@@ -66,6 +69,7 @@ export class CuartoComponent implements OnInit {
     private fb:FormBuilder,
     private chatService:ChatService,
     private modalService: MDBModalService,
+    private usuariosService: UsuariosService,
     private router: Router) { }
 
     formEnviarInit(){
@@ -74,10 +78,14 @@ export class CuartoComponent implements OnInit {
       })
     }
     ngOnInit() {
-      let usuario = JSON.parse(localStorage.getItem("usuario"));
-      this.id_usuario = usuario["id_usuario"];
+      this.loggedIn = this.usuariosService.getEstadoSesion();
       this.formEnviarInit();
       this.activatedRoute.params.subscribe( params => {
+        if (this.loggedIn) {
+          let usuario = JSON.parse(localStorage.getItem("usuario"));
+          this.id_usuario = usuario["id_usuario"];
+          this.ver = true;
+        }
         this.cuartosService.getCuarto(params['id']).subscribe( resultado => {
 
           this.cuarto = resultado[0];
@@ -142,13 +150,13 @@ export class CuartoComponent implements OnInit {
   }
 
   openModal() {
-    
+
     this.modalOptions.data.oferta=this.oferta.fk_oferta
     this.modalOptions.data.id_usuario=this.id_usuario
-    console.log(this.oferta) 
+    console.log(this.oferta)
     this.modalRef = this.modalService.show(ModalChatComponent, this.modalOptions)
-    this.modalRef.content.action.subscribe( (result: any) => { 
-      console.log(result); 
+    this.modalRef.content.action.subscribe( (result: any) => {
+      console.log(result);
       this.router.navigate(['chat', result])
     });
   }

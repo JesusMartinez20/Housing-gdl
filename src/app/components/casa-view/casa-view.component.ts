@@ -58,6 +58,8 @@ export class CasaViewComponent implements OnInit {
   comentarios: any = null;
   sinComentarios: boolean = true;
   cancelado: boolean = false;
+  id_casa:number = null;
+  id_usuario:number = null;
 
   loggedIn: boolean = false;
 
@@ -75,11 +77,15 @@ export class CasaViewComponent implements OnInit {
   }
 
   ngOnInit() {
+
     this.loggedIn = this.usuariosService.getEstadoSesion();
     this.activatedRoute.params.subscribe(params => {
       //this.getEstadoEvento(params['id']);
+      this.id_casa = params['id'];
       this.getComentarios(params['id']);
       if (this.loggedIn) {
+        let usuario = JSON.parse(localStorage.getItem("usuario"));
+        this.id_usuario = usuario["id_usuario"];
         this.validarComentarios(params['id']);
       }
       this.casasService.getCasa(params['id']).subscribe(resultado => {
@@ -144,19 +150,19 @@ export class CasaViewComponent implements OnInit {
 
   validarComentarios(id_casa: number) {
     this.usuario = JSON.parse(localStorage.getItem("usuario"));
-    this.usuariosService.validarComentarios(this.usuario['id_usuario'], id_casa).subscribe(datos => {
-      if (datos['validacion'] == 0) {
+    this.usuariosService.comprobarComentarios(this.id_usuario, id_casa).subscribe(datos => {
+      if (datos != null) {
         this.comentar = false;
-        this.getComentarios(id_casa);
+        //this.getComentarios(id_casa);
         return
       } else {
-        this.usuariosService.comprobarComentarios(this.usuario['id_usuario'], id_casa).subscribe(resultado => {
-          if (resultado == null) {
+        this.usuariosService.validarComentarios(this.id_usuario, id_casa).subscribe(resultado => {
+          if (resultado["validacion"] = 0) {
             this.comentar = true;
-            this.getComentarios(id_casa);
+            //this.getComentarios(id_casa);
           } else {
             this.comentar = false;
-            this.getComentarios(id_casa);
+            //this.getComentarios(id_casa);
           }
         })
       }
@@ -165,12 +171,10 @@ export class CasaViewComponent implements OnInit {
 
   insertarComentario(comentario: string, cal_instalaciones: number, cal_ambiente: number, cal_limpieza: number) {
     this.usuario = JSON.parse(localStorage.getItem("usuario"));
-    this.activatedRoute.params.subscribe(params => {
-      this.usuariosService.insertarComentario(comentario, cal_instalaciones, cal_ambiente, cal_limpieza, params['id'], this.usuario['id_usuario']).subscribe(resultado => {
+      this.usuariosService.insertarComentario(comentario, cal_instalaciones, cal_ambiente, cal_limpieza, this.id_casa, this.id_usuario).subscribe(resultado => {
         this.comentar = false;
-        this.getComentarios(params['id']);
+        this.getComentarios(this.id_casa);
       });
-    });
   }
 
   getComentarios(id_casa: number) {

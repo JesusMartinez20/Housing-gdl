@@ -45,7 +45,7 @@ export class CasasService {
 
   filtrarCasas( filtro:any ){
     const FILTRO = serialize(filtro);
-    return this.http.post(`${this.url}filtroEventos.php`,FILTRO).pipe(retry(3))
+    return this.http.post(`${this.url}casas/filtroCasa.php`,FILTRO).pipe(retry(3))
   }
 
   getCarousel(){

@@ -55,8 +55,8 @@ import { MDBBootstrapModulesPro, MDBSpinningPreloader } from 'ng-uikit-pro-stand
     PerfilEditarComponent,
     ChatListComponent,
     ChatComponent,
-    CuartoComponent,
-    
+    CuartoComponent
+
   ],
   imports: [
     BrowserModule,

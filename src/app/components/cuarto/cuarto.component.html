@@ -62,23 +62,29 @@
           </div>
       </div>
       <hr>
-      <div class="input-group form-row mb-3">
+      <div class="input-group form-row mb-3" *ngIf="ver==true">
           <div class="col-md-12 text-center" *ngIf="chatactivo==null">
             <!--<button class="btn btn-danger ml-lg-2" type="button" (click)="crearChat( oferta.fk_oferta )">Preguntar</button>-->
             <!-- <button class="btn btn-success my-2 my-sm-0" type="button" data-toggle="modal" data-target="#myModal1">Preguntar</button> -->
-            <button class="btn btn-danger ml-lg-2" color="primary" (click)="openModal()">Preguntar</button>
+            <button class="btn btn-danger ml-lg-2" color="primary" (click)="openModal() ">Preguntar</button>
           </div>
           <div class="col-md-12 text-center" *ngIf="chatactivo!=null">
             <label for="precio" class="form-text text-danger">Usted ya tiene un chat activo</label>
           </div>
       </div>
+      <div class="col-md-12 text-center" *ngIf="ver==false">
+        <label for="precio" class="form-text text-danger">Necesita iniciar sesion para preguntar por la oferta</label>
+      </div>
 </div>
 <div class="card-body" *ngIf="oferta.tipo==2">
-      <div class="form-row mb-12">
+      <div class="form-row mb-12" *ngIf="ver==true">
           <div class="col-md-4">
               <label for="nombreusuario">Nombre Usuario: {{oferta.nombre_usuario}}</label>
           </div>
 
+      </div>
+      <div class="col-md-12 text-center" *ngIf="ver==false">
+        <label for="precio" class="form-text text-danger">Necesita iniciar sesion para ver la oferta</label>
       </div>
 </div>
 </div>
