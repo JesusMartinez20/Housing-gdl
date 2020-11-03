@@ -65,6 +65,8 @@
       <div class="input-group form-row mb-3">
           <div class="col-md-12 text-center" *ngIf="chatactivo==null">
             <!--<button class="btn btn-danger ml-lg-2" type="button" (click)="crearChat( oferta.fk_oferta )">Preguntar</button>-->
+            <!-- <button class="btn btn-success my-2 my-sm-0" type="button" data-toggle="modal" data-target="#myModal1">Preguntar</button> -->
+            <button class="btn btn-danger ml-lg-2" color="primary" (click)="openModal()">Preguntar</button>
           </div>
           <div class="col-md-12 text-center" *ngIf="chatactivo!=null">
             <label for="precio" class="form-text text-danger">Usted ya tiene un chat activo</label>
@@ -79,4 +81,31 @@
 
       </div>
 </div>
+</div>
+
+<br>
+<br>
+<br>
+<br>
+
+<div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <div class="container-fluid text-center">
+                  <button #cerrar type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <h5 class="modal-title" id="myModalLabel1">Iniciar conversación</h5>
+              </div>
+          </div>
+          <div class="modal-body">
+            <form style="width: 100%;display: flex;" [formGroup]="enviarForm" (ngSubmit)="crearChat()">
+              <input type="text" class="form-control" placeholder="Preguntale algo al administrador..." aria-label="Username" formControlName="enviarInput" aria-describedby="basic-addon1">
+              <button type="submit" class="btn btn-primary" >
+                  <i class="fas fa-paper-plane"></i>
+              </button>
+          </form>
+          </div>
+
+      </div>
+  </div>
 </div>

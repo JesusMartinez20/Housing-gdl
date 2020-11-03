@@ -133,18 +133,5 @@ export class ChatComponent implements OnInit {
     }
   }
   }
-  bloquear(){
-    let msg=this.enviarForm.get('enviarInput').value;
-    if (window.confirm("Está seguro de querer bloquear la conversación")) {
-    if(msg.length>=10){
-      this.chatService.bloquearChat(this.idChat,msg).subscribe(res=>{
-      console.log(res)
-      location.reload();
-      })
-      }else{
-        window.alert("El mensaje debe de ser mayor a 10 caracteres")
-      }
-    }
-  }
 }
 

@@ -28,7 +28,7 @@ const routes: Routes = [
   { path: 'historial', component: HistorialComprasComponent },
   { path: 'info-compra/:id', component: CompraInfoComponent },
   { path: 'chat-list', component: ChatListComponent },
-  { path: 'chat:id', component: ChatComponent },
+  { path: 'chat/:id', component: ChatComponent },
   { path: 'cuarto/:id', component: CuartoComponent },
   { path: '**', pathMatch: 'full', redirectTo: 'inicio' }
 ];

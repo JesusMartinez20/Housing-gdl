@@ -33,6 +33,8 @@ import { PerfilEditarComponent } from './components/perfil-editar/perfil-editar.
 import { ChatListComponent } from './components/chat-list/chat-list.component';
 import { ChatComponent } from './components/chat/chat.component';
 import { CuartoComponent } from './components/cuarto/cuarto.component';
+import { ModalChatComponent } from './components/modal-chat/modal-chat.component';
+import { MDBBootstrapModulesPro, MDBSpinningPreloader } from 'ng-uikit-pro-standard';
 
 
 @NgModule({
@@ -53,7 +55,8 @@ import { CuartoComponent } from './components/cuarto/cuarto.component';
     PerfilEditarComponent,
     ChatListComponent,
     ChatComponent,
-    CuartoComponent
+    CuartoComponent,
+    
   ],
   imports: [
     BrowserModule,
@@ -63,9 +66,12 @@ import { CuartoComponent } from './components/cuarto/cuarto.component';
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule,
-    SocialLoginModule
+    SocialLoginModule,
+    MDBBootstrapModulesPro.forRoot(),
   ],
+  entryComponents: [ ModalChatComponent ],
   providers: [
+    MDBSpinningPreloader,
     CasasService,
     PublicacionesService,
     CuartosService,

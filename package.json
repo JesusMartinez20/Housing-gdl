@@ -26,6 +26,7 @@
         "bootstrap": "^4.5.0",
         "chart.js": "^2.5.0",
         "jquery": "^3.5.1",
+        "ng-uikit-pro-standard": "^1.0.0",
         "ngx-owl-carousel-o": "^3.0.1",
         "object-to-formdata": "^4.1.0",
         "owl.carousel": "^2.3.4",

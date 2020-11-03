@@ -49,7 +49,7 @@ export class ChatListComponent implements OnInit {
     this.usuario = JSON.parse(localStorage.getItem("usuario"));
     this.foto = this.usuario.photoUrl;
     this.chatService.verChats(this.usuario.id_usuario).subscribe( resultado => {
-      console.log(resultado)
+      console.log(this.usuario.id_usuario)
       this.users=resultado
     });
   }
