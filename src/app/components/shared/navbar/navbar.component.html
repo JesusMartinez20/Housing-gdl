@@ -23,10 +23,10 @@
             <li class="nav-item nav-button" routerLinkActive="active">
                 <a class="nav-link" [routerLink]="['nosotros']">Nosotros</a>
             </li>
-            <li class="nav-item nav-button" *ngIf="!loggedIn">
+            <li class="nav-item nav-button" *ngIf="loggedIn == false">
                 <button class="btn btn-success my-2 my-sm-0" type="button" data-toggle="modal" data-target="#myModal">Iniciar Sesi&oacute;n</button>
             </li>
-            <li class="nav-item ml-5" *ngIf="loggedIn">
+            <li class="nav-item ml-5" *ngIf="loggedIn == true && usuarioFB != null">
                 <div class="btn-group">
                     <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
                     <div class="dropdown-menu">
