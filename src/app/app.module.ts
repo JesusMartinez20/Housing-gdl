@@ -35,7 +35,7 @@ import { ChatComponent } from './components/chat/chat.component';
 import { CuartoComponent } from './components/cuarto/cuarto.component';
 import { ModalChatComponent } from './components/modal-chat/modal-chat.component';
 import { MDBBootstrapModulesPro, MDBSpinningPreloader } from 'ng-uikit-pro-standard';
-
+import { NgxStripeModule } from 'ngx-stripe';
 
 @NgModule({
   declarations: [
@@ -68,6 +68,7 @@ import { MDBBootstrapModulesPro, MDBSpinningPreloader } from 'ng-uikit-pro-stand
     FormsModule,
     SocialLoginModule,
     MDBBootstrapModulesPro.forRoot(),
+    NgxStripeModule.forRoot('pk_test_51HjyTwEaCyOGAt8vaArjUYevqjaDs0nwsMWE6jLReVYaOIcfEgdZhaTzjUOTWlsVDH3dcDXuhGw33JEEapMSPgyD00COwuwPKF\n'),
   ],
   entryComponents: [ ModalChatComponent ],
   providers: [

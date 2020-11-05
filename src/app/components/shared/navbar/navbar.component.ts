@@ -5,6 +5,9 @@ import { SocialAuthService } from "angularx-social-login";
 import { FacebookLoginProvider } from "angularx-social-login";
 import { SocialUser } from "angularx-social-login";
 import { UsuariosService } from '../../../services/usuarios.service';
+import {StripeService} from "ngx-stripe";
+import {RedirectToCheckoutOptions} from "@stripe/stripe-js";
+import {HttpClient} from "@angular/common/http";
 
 @Component({
   selector: 'app-navbar',
@@ -32,7 +35,9 @@ export class NavbarComponent implements OnInit {
   constructor(public router:Router,
               private authService:SocialAuthService,
               private usuariosService:UsuariosService,
-              private fb:FormBuilder
+              private fb:FormBuilder,
+              private stripeService: StripeService,
+              private http: HttpClient
               ) { }
 
   ngOnInit() {
@@ -202,8 +207,15 @@ export class NavbarComponent implements OnInit {
     });
   }
   realizarPago(){
-    this.usuariosService.realizarPago(this.datospago).subscribe(datos => {
-
+    // Crear checkout session
+    this.http.get(this.datospago).subscribe(data => {
+      this.stripeService.redirectToCheckout({
+        sessionId: data.id
+      }).subscribe(result => {
+        if (result.error) {
+          alert('Error al realizar el pago');
+        }
+      });
     });
   }
 

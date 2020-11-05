@@ -1144,6 +1144,11 @@
     semver "7.3.2"
     semver-intersect "1.4.0"
 
+"@stripe/stripe-js@^1.11.0":
+  version "1.11.0"
+  resolved "https://registry.yarnpkg.com/@stripe/stripe-js/-/stripe-js-1.11.0.tgz#00e812d72a7760dae08237875066d263671478ee"
+  integrity sha512-SDNZKuETBEVkernd1tq8tL6wNfVKrl24Txs3p+4NYxoaIbNaEO7mrln/2Y/WRcQBWjagvhDIM5I6+X1rfK0qhQ==
+
 "@sweetalert2/theme-bootstrap-4@^3.1.4":
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/@sweetalert2/theme-bootstrap-4/-/theme-bootstrap-4-3.2.0.tgz#9580fcefd7c624863e5a7cd35cb6b253e0ac8592"
@@ -6873,10 +6878,24 @@ next-tick@~1.0.0:
   resolved "https://registry.yarnpkg.com/next-tick/-/next-tick-1.0.0.tgz#ca86d1fe8828169b0120208e3dc8424b9db8342c"
   integrity sha1-yobR/ogoFpsBICCOPchCS524NCw=
 
+ng-uikit-pro-standard@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/ng-uikit-pro-standard/-/ng-uikit-pro-standard-1.0.0.tgz#5f42e7c4b51c0a4c85481db5aacf5e4ae9757676"
+  integrity sha512-GaG4Ek8pJRdHdr6JtkE4mHMvhb619mJI9VOIXKas4F0iGRyTb7U4rc2Y9AFgsysOYBZKCYifSzKxCf3NukZj0w==
+  dependencies:
+    tslib "^1.9.0"
+
 ngx-owl-carousel-o@^3.0.1:
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/ngx-owl-carousel-o/-/ngx-owl-carousel-o-3.1.1.tgz#563523c1314489a59bd7dc67b77683273a712c71"
   integrity sha512-u1w6UHcziWJsyfG1ShbCPzfWEbbotrW+/T6WHkr8G4wdL8qvF1EeWrlNjiE9uRHAAj+Tg30YIclXKJjCf1+w6w==
+
+ngx-stripe@^10.1.2:
+  version "10.1.2"
+  resolved "https://registry.yarnpkg.com/ngx-stripe/-/ngx-stripe-10.1.2.tgz#d76f86c7230b605d576c0b819e6b76100374a1b8"
+  integrity sha512-27ZlmqvvpfKD/qObe14BZgI6Hz6/bpe4NhS1XcIvfs/zlEyzlWXrp6jj60hPjxbsOpDZ+ytN7eiVfk30s4XLeQ==
+  dependencies:
+    tslib "^2.0.0"
 
 nice-try@^1.0.4:
   version "1.0.5"
