@@ -17,6 +17,7 @@ export class NavbarComponent implements OnInit {
   mensaje = null;
   datospago = null;
   id_usuario = null;
+  id_compra = 2;
 
   formRegistro:FormGroup;
 
@@ -96,6 +97,7 @@ export class NavbarComponent implements OnInit {
                 this.usuariosService.setEstadoSesion(true);
                 this.usuariosService.datosPago(usuario["id_usuario"]).subscribe( pago => {
                   this.datospago = pago;
+                  console.log(this.datospago);
                 });
 
               }
@@ -200,7 +202,9 @@ export class NavbarComponent implements OnInit {
     });
   }
   realizarPago(){
-    console.log(this.datospago.value);
+    this.usuariosService.realizarPago(this.datospago).subscribe(datos => {
+
+    });
   }
 
   verChats(){
