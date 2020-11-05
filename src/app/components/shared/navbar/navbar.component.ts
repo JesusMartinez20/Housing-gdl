@@ -1,12 +1,12 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { Router } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { SocialAuthService } from "angularx-social-login";
-import { FacebookLoginProvider } from "angularx-social-login";
-import { SocialUser } from "angularx-social-login";
-import { UsuariosService } from '../../../services/usuarios.service';
+import {Component, OnInit, ViewChild, ElementRef} from '@angular/core';
+import {Router} from '@angular/router';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {SocialAuthService} from "angularx-social-login";
+import {FacebookLoginProvider} from "angularx-social-login";
+import {SocialUser} from "angularx-social-login";
+import {UsuariosService} from '../../../services/usuarios.service';
 import {StripeService} from "ngx-stripe";
-import {RedirectToCheckoutOptions} from "@stripe/stripe-js";
+import {RedirectToCheckoutOptions, RedirectToCheckoutServerOptions} from "@stripe/stripe-js";
 import {HttpClient} from "@angular/common/http";
 
 @Component({
@@ -16,37 +16,38 @@ import {HttpClient} from "@angular/common/http";
 export class NavbarComponent implements OnInit {
 
   usuarioFB: SocialUser = null;
-  loggedIn:boolean = false;
+  loggedIn: boolean = false;
   mensaje = null;
   datospago = null;
   id_usuario = null;
   id_compra = 2;
 
-  formRegistro:FormGroup;
+  formRegistro: FormGroup;
 
-  @ViewChild('cerrar',{ static: false }) cerrar;
-  @ViewChild('modalRegistro',{ static: false }) modalRegistro;
-  @ViewChild('cerrarModalRegistro',{ static: false }) cerrarModalRegistro;
-  @ViewChild('modalPago',{ static: false }) modalPago;
-  @ViewChild('cerrarModalPago',{ static: false }) cerrarModalPago;
-  @ViewChild('modalBloqueo',{ static: false }) modalBloqueo;
-  @ViewChild('cerrarModalBloqueo',{ static: false }) cerrarModalBloqueo;
+  @ViewChild('cerrar', {static: false}) cerrar;
+  @ViewChild('modalRegistro', {static: false}) modalRegistro;
+  @ViewChild('cerrarModalRegistro', {static: false}) cerrarModalRegistro;
+  @ViewChild('modalPago', {static: false}) modalPago;
+  @ViewChild('cerrarModalPago', {static: false}) cerrarModalPago;
+  @ViewChild('modalBloqueo', {static: false}) modalBloqueo;
+  @ViewChild('cerrarModalBloqueo', {static: false}) cerrarModalBloqueo;
 
-  constructor(public router:Router,
-              private authService:SocialAuthService,
-              private usuariosService:UsuariosService,
-              private fb:FormBuilder,
+  constructor(public router: Router,
+              private authService: SocialAuthService,
+              private usuariosService: UsuariosService,
+              private fb: FormBuilder,
               private stripeService: StripeService,
               private http: HttpClient
-              ) { }
+  ) {
+  }
 
   ngOnInit() {
     this.formRegistroInit();
 
     console.log(this.loggedIn);
-    console.log( JSON.parse(localStorage.getItem("usuario")));
+    console.log(JSON.parse(localStorage.getItem("usuario")));
 
-    if(JSON.parse(localStorage.getItem("usuario")) !== null) {
+    if (JSON.parse(localStorage.getItem("usuario")) !== null) {
       console.log("ola");
       this.usuarioFB = JSON.parse(localStorage.getItem("usuario"));
       this.loggedIn = true;
@@ -55,19 +56,17 @@ export class NavbarComponent implements OnInit {
     }
 
     this.authService.authState.subscribe((user) => {
-      if (this.usuarioFB === null ) {
+      if (this.usuarioFB === null) {
         this.usuarioFB = user;
         this.loggedIn = (this.usuarioFB != null);
         localStorage.setItem("usuario", JSON.stringify(this.usuarioFB));
       }
-      if(this.loggedIn){
-        this.usuariosService.registrarUsuario(this.usuarioFB).subscribe( datos => {
-          if(datos['resultado'] == "ERROR"){
+      if (this.loggedIn) {
+        this.usuariosService.registrarUsuario(this.usuarioFB).subscribe(datos => {
+          if (datos['resultado'] == "ERROR") {
             console.log("ERROR");
             return
-          }
-          else if( datos['resultado'] == "OK")
-          {
+          } else if (datos['resultado'] == "OK") {
 
             let usuario = JSON.parse(localStorage.getItem("usuario"));
             usuario["id_usuario"] = datos["id_usuario"];
@@ -76,31 +75,31 @@ export class NavbarComponent implements OnInit {
             let tipo = datos["estado"];
             console.log(tipo);
             this.cerrar.nativeElement.click();
-            if(tipo == 2){
-              this.usuariosService.consultaNotificacionBloqueo(datos["id_usuario"]).subscribe( resultado => {
+            if (tipo == 2) {
+              this.usuariosService.consultaNotificacionBloqueo(datos["id_usuario"]).subscribe(resultado => {
                 this.mensaje = resultado['mensaje'];
                 window.confirm(resultado['mensaje']);
               });
 
               this.logOut();
               //this.modalBloqueo.nativeElement.click();
-            }else{
+            } else {
 
-              if(tipo == 0){
+              if (tipo == 0) {
                 this.modalRegistro.nativeElement.click();
-              }else if(tipo == 1){
+              } else if (tipo == 1) {
                 this.usuariosService.setEstadoSesion(true);
-                this.usuariosService.consultaNotificacion(usuario["id_usuario"]).subscribe( chats => {
+                this.usuariosService.consultaNotificacion(usuario["id_usuario"]).subscribe(chats => {
                   let chat = chats["chat"];
-                  if(chat == -1){
+                  if (chat == -1) {
                     return
-                  }else{
+                  } else {
                     this.router.navigate(['chat', chat])
                   }
                 });
-              }else{
+              } else {
                 this.usuariosService.setEstadoSesion(true);
-                this.usuariosService.datosPago(usuario["id_usuario"]).subscribe( pago => {
+                this.usuariosService.datosPago(usuario["id_usuario"]).subscribe(pago => {
                   this.datospago = pago;
                   console.log(this.datospago);
                 });
@@ -112,57 +111,56 @@ export class NavbarComponent implements OnInit {
               this.formRegistro.get('id').setValue(this.usuarioFB.id);
 
             }
-            }
+          }
         });
       }
     });
   }
 
-  formRegistroInit(){
+  formRegistroInit() {
     this.formRegistro = this.fb.group({
-      correo:[null, [Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$'), Validators.required]],
-      celular:[null, Validators.required],
-      celularExt:[null, Validators.required],
-      nacimiento:[null, Validators.required]
+      correo: [null, [Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$'), Validators.required]],
+      celular: [null, Validators.required],
+      celularExt: [null, Validators.required],
+      nacimiento: [null, Validators.required]
     })
   }
 
-  get validacionCorreoR(){
+  get validacionCorreoR() {
     return this.formRegistro.get('correo').invalid && this.formRegistro.get('correo').touched
   }
 
-  get validacionNacimiento(){
+  get validacionNacimiento() {
     return this.formRegistro.get('nacimiento').invalid && this.formRegistro.get('nacimiento').touched
   }
 
-  get validacionTelefono(){
+  get validacionTelefono() {
     return this.formRegistro.get('celular').invalid && this.formRegistro.get('celular').touched
   }
 
-  get validacionTelefonoExtra(){
+  get validacionTelefonoExtra() {
     return this.formRegistro.get('celularExt').invalid && this.formRegistro.get('celularExt').touched
   }
 
-  get validacionNumero(){
+  get validacionNumero() {
     return this.esAlfa(this.formRegistro.get('celular').value) && this.formRegistro.get('celular').value != ""
   }
 
-  get validacionNumeroExtra(){
+  get validacionNumeroExtra() {
     return this.esAlfa(this.formRegistro.get('celularExt').value) && this.formRegistro.get('celularExt').value != ""
   }
 
   esAlfa(str) {
-    if(str != null){
-      if (!str.match(/^[0-9]+$/)){
+    if (str != null) {
+      if (!str.match(/^[0-9]+$/)) {
         return true
-      }
-      else{
+      } else {
         return false
       }
     }
   }
 
-  verPerfil(){
+  verPerfil() {
     this.router.navigate(['perfil'])
   }
 
@@ -182,21 +180,19 @@ export class NavbarComponent implements OnInit {
     this.router.navigate(['inicio']);
   }
 
-  guardarRegistro(){
+  guardarRegistro() {
     console.log(this.formRegistro.value);
 
     this.usuariosService.buscarCorreo(this.formRegistro.get('correo').value).subscribe(datos => {
-      if(datos['estado'] == 0){
+      if (datos['estado'] == 0) {
         window.confirm(datos['mensaje']);
         return
-      }
-      else if(datos['estado'] == 1){
-        this.usuariosService.terminarRegistro(this.formRegistro.value, this.id_usuario).subscribe( datos => {
-          if(datos['resultado'] == "ERROR"){
+      } else if (datos['estado'] == 1) {
+        this.usuariosService.terminarRegistro(this.formRegistro.value, this.id_usuario).subscribe(datos => {
+          if (datos['resultado'] == "ERROR") {
             window.confirm("Ocurrio un error. Inténtelo más tarde.");
             return
-          }
-          else if(datos['resultado'] == "OK"){
+          } else if (datos['resultado'] == "OK") {
             window.confirm("Registro completado con éxito.");
             this.usuariosService.setEstadoSesion(true);
             this.formRegistro.reset();
@@ -206,12 +202,15 @@ export class NavbarComponent implements OnInit {
       }
     });
   }
-  realizarPago(){
+
+  realizarPago() {
     // Crear checkout session
-    this.http.get(this.datospago).subscribe(data => {
-      this.stripeService.redirectToCheckout({
-        sessionId: data.id
-      }).subscribe(result => {
+    this.http.get<any>(this.datospago).subscribe(response => {
+      const checkoutOptions: RedirectToCheckoutServerOptions = {
+        sessionId: response.id
+      };
+
+      this.stripeService.redirectToCheckout(checkoutOptions).subscribe(result => {
         if (result.error) {
           alert('Error al realizar el pago');
         }
@@ -219,7 +218,7 @@ export class NavbarComponent implements OnInit {
     });
   }
 
-  verChats(){
+  verChats() {
     // this.router.navigate(['']).
   }
 
