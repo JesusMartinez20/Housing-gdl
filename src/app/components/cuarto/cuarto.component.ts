@@ -113,7 +113,7 @@ export class CuartoComponent implements OnInit {
     this.id_semestre = event;
     if(this.id_semestre != null){
       this.cuartosService.getOferta(this.id_semestre, this.id_cuarto).subscribe( resultado => this.oferta = resultado)
-      this.chatService.comprobarChat(this.id_usuario).subscribe( resultado => this.chatactivo = resultado)
+      this.chatService.comprobarChat(this.id_usuario).subscribe( resultado => this.chatactivo = resultado['id_chat'])
     }
     else{
       return
@@ -160,7 +160,9 @@ export class CuartoComponent implements OnInit {
       this.router.navigate(['chat', result])
     });
   }
-
+  verChat() {
+    this.router.navigate(['chat', this.chatactivo])
+  }
 
 
 }

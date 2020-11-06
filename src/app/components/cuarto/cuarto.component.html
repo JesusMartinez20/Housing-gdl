@@ -69,7 +69,7 @@
             <button class="btn btn-danger ml-lg-2" color="primary" (click)="openModal() ">Preguntar</button>
           </div>
           <div class="col-md-12 text-center" *ngIf="chatactivo!=null">
-            <label for="precio" class="form-text text-danger">Usted ya tiene un chat activo</label>
+            <button class="btn btn-danger ml-lg-2" color="primary" (click)="verChat() ">Chat</button>
           </div>
       </div>
       <div class="col-md-12 text-center" *ngIf="ver==false">

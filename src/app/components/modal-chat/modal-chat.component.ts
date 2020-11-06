@@ -34,7 +34,7 @@ export class ModalChatComponent implements OnInit {
 
     let msg:string=msg1;
     if(msg.length>=10){
-      this.chatService.crearChat(this.id_usuario, this.oferta, msg).subscribe(res=>{
+      this.chatService.crearChat(this.id_usuario, msg).subscribe(res=>{
         this.enviarForm.patchValue({enviarInput:''})
         let id_chat=res["id_chat"];
         this.action.next(id_chat);

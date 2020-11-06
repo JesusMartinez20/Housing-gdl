@@ -5,6 +5,7 @@ import {SocialAuthService} from "angularx-social-login";
 import {FacebookLoginProvider} from "angularx-social-login";
 import {SocialUser} from "angularx-social-login";
 import {UsuariosService} from '../../../services/usuarios.service';
+import { ChatService } from '../../../services/chat.service';
 import { StripeService, StripeCardComponent } from 'ngx-stripe';
 import {
   StripeCardElementOptions,
@@ -40,7 +41,7 @@ export class NavbarComponent implements OnInit {
   elementsOptions: StripeElementsOptions = {
     locale: 'es'
   };
- 
+
   stripeTest: FormGroup;
 
   usuarioFB: SocialUser = null;
@@ -54,8 +55,9 @@ export class NavbarComponent implements OnInit {
     nombre_semestre: "",
     precio: "",
   };
-  id_usuario = null;
+  id_usuario:number = null;
   id_compra = 2;
+  id_chat:number = null;
 
   showCreditcard=false;
 
@@ -76,6 +78,7 @@ export class NavbarComponent implements OnInit {
               private fb: FormBuilder,
               private stripeService: StripeService,
               private http: HttpClient,
+              private chatService:ChatService
   ) {
   }
 
@@ -116,6 +119,9 @@ export class NavbarComponent implements OnInit {
             let tipo = datos["estado"];
             console.log(tipo);
             this.cerrar.nativeElement.click();
+            /*this.chatService.comprobarChat(usuario["id_usuario"]).subscribe(resultado => {
+              this.id_chat = resultado["id_chat"];
+            });*/
             if (tipo == 2) {
               this.usuariosService.consultaNotificacionBloqueo(datos["id_usuario"]).subscribe(resultado => {
                 this.mensaje = resultado['mensaje'];
@@ -262,9 +268,9 @@ export class NavbarComponent implements OnInit {
     });
   }
 
-  verChats() {
-    // this.router.navigate(['']).
-  }
+  /*verChats() {
+    this.router.navigate(['chat', this.id_chat])
+  }*/
 
   createToken(): void {
     const name = this.stripeTest.get('name').value;
