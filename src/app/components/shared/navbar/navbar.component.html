@@ -138,6 +138,42 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="modalPago1" tabindex="-1" role="dialog" aria-labelledby="pagarLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="container-fluid text-center">
+                    <button #cerrar type="button" class="invisible" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h5 class="modal-title" id="pagarLabel">Pagar orden</h5>
+                </div>
+            </div>
+            <div class="modal-body">
+                <p> Casa: {{datospago.nombre_casa}}</p>
+                <p> Cuarto: {{datospago.nombre_cuarto}}</p>
+                <p> Semestre: {{datospago.nombre_semestre}}</p>
+                <p> Precio: {{datospago.precio}}</p>
+
+                <button class="btn btn-success" (click)="mostrarTarjeta()">Ingresar datos</button>
+                <br/>
+            </div>
+            <form *ngIf="showCreditcard==true" novalidate (ngSubmit)="createToken()" [formGroup]="stripeTest">
+                <input class="form-control inputCards" type="text" formControlName="name" placeholder="Ingrese su nombre">
+                <ngx-stripe-card class="inputCards"
+                  [options]="cardOptions"
+                  [elementsOptions]="elementsOptions"
+                ></ngx-stripe-card>
+                <button class="btn btn-success botonPagar"  type="submit">
+                  Pagar
+                </button>
+            </form>
+        </div>
+    </div>
+    <button #modalPago1 class="invisible" type="button" data-toggle="modal" data-target="#modalPago1">xxx</button>
+</div>
+
+<div class="modal fade" id="stripe" tabindex="-1" role="dialog" aria-labelledby="stripeLabel" aria-hidden="true">
+    
+</div>
 <!-- <div class="modal fade" id="modalPago" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="modalEventoLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -184,4 +220,16 @@
         </div>
     </div>
 </div> -->
+
+<style>
+    .inputCards{
+        padding: 3%;
+        margin: 3%;
+        width: 94%;
+    }
+
+    .botonPagar{
+        margin: 3%;
+    }
+</style>
 

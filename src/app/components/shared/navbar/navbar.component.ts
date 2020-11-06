@@ -5,22 +5,59 @@ import {SocialAuthService} from "angularx-social-login";
 import {FacebookLoginProvider} from "angularx-social-login";
 import {SocialUser} from "angularx-social-login";
 import {UsuariosService} from '../../../services/usuarios.service';
-import {StripeService} from "ngx-stripe";
+import { StripeService, StripeCardComponent } from 'ngx-stripe';
+import {
+  StripeCardElementOptions,
+  StripeElementsOptions
+} from '@stripe/stripe-js';
 import {RedirectToCheckoutOptions, RedirectToCheckoutServerOptions} from "@stripe/stripe-js";
 import {HttpClient} from "@angular/common/http";
+
+
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html'
 })
 export class NavbarComponent implements OnInit {
+  @ViewChild(StripeCardComponent) card: StripeCardComponent;
+
+  cardOptions: StripeCardElementOptions = {
+    style: {
+      base: {
+        iconColor: '#666EE8',
+        color: '#31325F',
+        fontWeight: '300',
+        fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+        fontSize: '18px',
+        '::placeholder': {
+          color: '#CFD7E0'
+        }
+      }
+    }
+  };
+
+  elementsOptions: StripeElementsOptions = {
+    locale: 'es'
+  };
+ 
+  stripeTest: FormGroup;
 
   usuarioFB: SocialUser = null;
   loggedIn: boolean = false;
   mensaje = null;
-  datospago = null;
+  datospago:any = {
+    fk_oferta: "",
+    id_compra: "",
+    nombre_casa: "",
+    nombre_cuarto: "",
+    nombre_semestre: "",
+    precio: "",
+  };
   id_usuario = null;
   id_compra = 2;
+
+  showCreditcard=false;
 
   formRegistro: FormGroup;
 
@@ -31,18 +68,22 @@ export class NavbarComponent implements OnInit {
   @ViewChild('cerrarModalPago', {static: false}) cerrarModalPago;
   @ViewChild('modalBloqueo', {static: false}) modalBloqueo;
   @ViewChild('cerrarModalBloqueo', {static: false}) cerrarModalBloqueo;
+  @ViewChild('modalPago1', {static: false}) modalPago1;
 
   constructor(public router: Router,
               private authService: SocialAuthService,
               private usuariosService: UsuariosService,
               private fb: FormBuilder,
               private stripeService: StripeService,
-              private http: HttpClient
+              private http: HttpClient,
   ) {
   }
 
   ngOnInit() {
     this.formRegistroInit();
+    this.stripeTest = this.fb.group({
+      name: ['', [Validators.required]]
+    });
 
     console.log(this.loggedIn);
     console.log(JSON.parse(localStorage.getItem("usuario")));
@@ -102,6 +143,9 @@ export class NavbarComponent implements OnInit {
                 this.usuariosService.datosPago(usuario["id_usuario"]).subscribe(pago => {
                   this.datospago = pago;
                   console.log(this.datospago);
+                  console.log('ptm')
+                  this.modalPago1.nativeElement.click();
+
                 });
 
               }
@@ -220,6 +264,29 @@ export class NavbarComponent implements OnInit {
 
   verChats() {
     // this.router.navigate(['']).
+  }
+
+  createToken(): void {
+    const name = this.stripeTest.get('name').value;
+    this.stripeService
+      .createToken(this.card.element, { name })
+      .subscribe((result) => {
+        if (result.token) {
+          // Use the token
+          this.usuariosService.realizarPago(this.id_usuario,result.token.id).subscribe(result=>{
+            console.log(result)
+          })
+          console.log(result.token);
+        } else if (result.error) {
+          // Error creating the token
+          console.log(result.error.message);
+        }
+      });
+  }
+
+  mostrarTarjeta(){
+    this.showCreditcard=true;
+    console.log(this.showCreditcard)
   }
 
 }
