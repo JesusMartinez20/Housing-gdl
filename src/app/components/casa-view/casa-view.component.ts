@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild, ElementRef} from '@angular/core';
+import {Component, OnInit, ViewChild, ElementRef, NgZone} from '@angular/core';
 import {OwlOptions} from 'ngx-owl-carousel-o';
 import {CuartosService} from '../../services/cuartos.service';
 import {ActivatedRoute} from '@angular/router';
@@ -72,7 +72,8 @@ export class CasaViewComponent implements OnInit {
               private casasService: CasasService,
               private cuartosService: CuartosService,
               private usuariosService: UsuariosService,
-              private httpClient: HttpClient
+              private httpClient: HttpClient,
+              private zone: NgZone
   ) {
   }
 
@@ -107,7 +108,6 @@ export class CasaViewComponent implements OnInit {
           };
 
           service.getDistanceMatrix(request, (r, status) => {
-              console.log("Recibio respuesta");
               let houses = [];
               r.rows[0].elements.forEach(((value, index) => {
                 if (value.distance.value > 20000) return;
@@ -118,9 +118,9 @@ export class CasaViewComponent implements OnInit {
               }));
 
               houses = houses.sort((a, b) => a.distance - b.distance).slice(0, 5);
-
-              this.closerHouses = houses;
-              console.log(this.closerHouses);
+              this.zone.run(() => {
+                this.closerHouses = houses;
+              })
             });
         }, error => {
           console.warn("Error");
@@ -158,12 +158,13 @@ export class CasaViewComponent implements OnInit {
       } else {
         this.usuariosService.validarComentarios(this.id_usuario, id_casa).subscribe(resultado => {
           if (resultado["validacion"] = 0) {
-            this.comentar = true;
-            //this.getComentarios(id_casa);
-          } else {
             this.comentar = false;
             //this.getComentarios(id_casa);
+          } else {
+            this.comentar = true;
+            //this.getComentarios(id_casa);
           }
+          console.log(this.comentar);
         })
       }
     })

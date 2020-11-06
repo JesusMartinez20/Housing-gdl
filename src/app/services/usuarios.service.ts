@@ -44,7 +44,7 @@ export class UsuariosService {
     return this.http.get(`${this.url}datos/verDatosRenta.php?id_usuario=${id_usuario}`).pipe(retry(3))
   }
   insertarComentario(comentario:string, cal_instalaciones:number, cal_limpieza:number, cal_ambiente:number, id_evento:number, id_usuario:number){
-    return this.http.get(`${this.url}casas/comentario/insertarComentario.php?comentario=${comentario}&instalacion=${cal_instalaciones}&limpieza=${cal_limpieza}&ambiente=${cal_ambiente}&id_evento=${id_evento}&id_usuario=${id_usuario}`).pipe(retry(3))
+    return this.http.get(`${this.url}casas/comentario/insertarComentario.php?comentario=${comentario}&instalacion=${cal_instalaciones}&limpieza=${cal_limpieza}&ambiente=${cal_ambiente}&id_casa=${id_evento}&id_usuario=${id_usuario}`).pipe(retry(3))
   }
   eliminarComentrio(id_cal:number){
     return this.http.get(`${this.url}casas/comentario/eliminarComentario.php?id_calificacion=${id_cal}`).pipe(retry(3))
