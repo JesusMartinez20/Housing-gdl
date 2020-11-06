@@ -71,8 +71,8 @@ export class UsuariosService {
     const INFO = serialize(info);
     return this.http.post(`${this.url}login/editarUsuario.php`, INFO).pipe(retry(3))
   }
-  realizarPago(id_compra:number){
-    return this.http.get(`${this.url}verificarPago.php?id_compra=${id_compra}`).pipe(retry(3))
+  realizarPago(id_usuario:number, token:number){
+    return this.http.get(`${this.url}login/realizarPago.php?id_usuario=${id_usuario}&token=${token}`).pipe(retry(3))
   }
 
 
