@@ -181,21 +181,22 @@ export class CasaViewComponent implements OnInit {
   getComentarios(id_casa: number) {
     this.casasService.getComentarios(id_casa).subscribe(resultado => {
       this.comentarios = resultado;
-
+      console.log('oli')
       if (this.comentarios == null) {
         this.sinComentarios = true;
       } else {
         this.sinComentarios = false;
 
         for (let x = 0; x < this.comentarios.length; x++) {
-          console.log(this.comentarios[x]['id_usuario']);
-          if (this.comentarios[x]['id_usuario'] == this.usuario['id_usuario']) {
-            this.comentarios[x]['eliminar'] = true;
+          console.log(this.comentarios[x]['fk_usuario']);
+          if (this.comentarios[x]['fk_usuario'] == this.usuario['id_usuario']) {
+            this.comentarios[x].eliminar = true;
           } else {
-            this.comentarios[x]['eliminar'] = false;
+            this.comentarios[x].eliminar = false;
           }
         }
       }
+      console.log(this.comentarios)
     })
   }
 

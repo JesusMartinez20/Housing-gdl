@@ -164,13 +164,13 @@
           </div>
         </div>
         <div class="col-md-7">
-          <div class="input-group input-group-sm">
-            <textarea style="resize: none;" class="form-control" cols="290" rows="3" placeholder="Agrega un Comentario"
+          <div style="height: 100%;">
+            <textarea style="resize: none; height: 100%;" class="form-control" cols="290" rows="3" placeholder="Agrega un Comentario"
                       #comentar
                       (keyup.enter)="insertarComentario(comentar.value, cal_instalaciones.value, cal_ambiente.value, cal_limpieza.value)"></textarea>
           </div>
         </div>
-        <div class="col-md-2">
+        <div class="comentar">
           <button class="btn btn-outline-primary mx-auto mt-4" type="button"
                   (click)="insertarComentario(comentar.value, cal_instalaciones.value, cal_ambiente.value, cal_limpieza.value)">
             Comentar
@@ -188,17 +188,22 @@
       <ng-container *ngIf="sinComentarios == false">
         <div class="card" *ngFor="let comentario of comentarios">
           <div class="card-body">
-            <div class="row h-100">
-              <div class="col-md-2 text-center my-auto">
-                <h6>{{ comentario.fk_usuario }}</h6>
-                <h5>Instalaciones: {{ comentario.limpieza }} Puntos</h5>
-                <h5>Ambiente: {{ comentario.ambiente }} Puntos</h5>
-                <h5>Limpieza: {{ comentario.instalaciones }} Puntos</h5>
+            <div class="comentario">
+              <div class="comentarioUsuario">
+                <img src="{{comentario.foto}}" class="imgComentario"/>
               </div>
-              <div class="col-md-8 text-left">
-                <p>{{ comentario.comentario }}</p>
+              <div style="width: 100%;">
+                <h5 style="height:50px;align-self: center;line-height: 50px;">{{ comentario.nombre_usuario }}</h5>
+                <h6>"{{ comentario.comentario }}"</h6>
+                <div class="divider"></div>
+                <div class="comentarioCalificaciones">
+                  <p>Instalaciones: {{ comentario.limpieza }} Puntos</p>
+                  <p>Ambiente: {{ comentario.ambiente }} Puntos</p>
+                  <p>Limpieza: {{ comentario.instalaciones }} Puntos</p>
+                </div>
               </div>
-              <div class="col-md-2 my-auto">
+              
+              <div class="">
                 <button type="button" class="btn btn-danger mx-auto my-auto d-block" *ngIf="comentario.eliminar == true"
                         (click)="eliminarComentario(comentario.id_calificacion)">X
                 </button>
@@ -241,3 +246,38 @@
 <br>
 <br>
 <br>
+
+<style>
+  .comentarioUsuario{
+    display: flex;
+    margin-right: 10px;
+  }
+
+  .comentarioCalificaciones{
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .imgComentario{
+    margin: 5px;
+    height: 50px;
+    width: 50px;
+    border-radius: 360px;
+  }
+
+  .comentario{
+    display: flex;
+  }
+
+  .divider{
+    margin: 15px 0 15px 0;
+    border: 1px solid #000;
+  }
+
+  .comentar{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+</style>
