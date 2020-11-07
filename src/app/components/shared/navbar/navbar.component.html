@@ -152,19 +152,23 @@
                 <p> Cuarto: {{datospago.nombre_cuarto}}</p>
                 <p> Semestre: {{datospago.nombre_semestre}}</p>
                 <p> Precio: {{datospago.precio}}</p>
-
-                <button class="btn btn-success" (click)="mostrarTarjeta()">Ingresar datos</button>
+                <div class="buttonDiv">
+                    <button class="btn btn-success" (click)="mostrarTarjeta()">Ingresar datos</button>
+                </div>
                 <br/>
             </div>
             <form *ngIf="showCreditcard==true" novalidate (ngSubmit)="createToken()" [formGroup]="stripeTest">
                 <input class="form-control inputCards" type="text" formControlName="name" placeholder="Ingrese su nombre">
-                <ngx-stripe-card class="inputCards"
-                  [options]="cardOptions"
-                  [elementsOptions]="elementsOptions"
-                ></ngx-stripe-card>
-                <button class="btn btn-success botonPagar"  type="submit">
-                  Pagar
-                </button>
+                <div class="inputCards">
+                    <ngx-stripe-card 
+                    [options]="cardOptions"
+                    [elementsOptions]="elementsOptions"
+                  ></ngx-stripe-card>
+                </div>
+                
+                <div class="buttonDiv">
+                    <button class="btn btn-success botonPagar"  type="submit">Pagar</button>
+                </div>
             </form>
         </div>
     </div>
@@ -230,6 +234,11 @@
 
     .botonPagar{
         margin: 3%;
+    }
+
+    .buttonDiv{
+        display: flex;
+        justify-content: center;
     }
 </style>
 
