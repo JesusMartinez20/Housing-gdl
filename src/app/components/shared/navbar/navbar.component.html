@@ -23,6 +23,9 @@
             <li class="nav-item nav-button" routerLinkActive="active">
                 <a class="nav-link" [routerLink]="['nosotros']">Nosotros</a>
             </li>
+            <li class="nav-item nav-button" routerLinkActive="active" *ngIf="loggedIn == true">
+                <a class="nav-link" (click)="irChat()">Chat</a>
+            </li>
             <li class="nav-item nav-button" *ngIf="loggedIn == false">
                 <button class="btn btn-success my-2 my-sm-0" type="button" data-toggle="modal" data-target="#myModal">Iniciar Sesi&oacute;n</button>
             </li>
@@ -138,6 +141,26 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="modalChat1" tabindex="-1" role="dialog" aria-labelledby="pagarLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="container-fluid text-center">
+                    <h5 class="modal-title" id="pagarLabel">Iniciar conversación</h5>
+                    <button #cerrarModalChat1 type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+                </div>
+            </div>
+            <div class="modal-body" style="display: flex;">
+                <input #msg type="text" class="form-control" placeholder="Preguntale algo al administrador..." aria-label="Username" formControlName="enviarInput" aria-describedby="basic-addon1">
+                <button (click)="crearChat(msg.value)" class="btn btn-primary" >
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    <button #modalChat1 class="invisible" type="button" data-toggle="modal" data-target="#modalChat1">xxx</button>
+</div>
+
 <div class="modal fade" id="modalPago1" tabindex="-1" role="dialog" aria-labelledby="pagarLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -175,9 +198,6 @@
     <button #modalPago1 class="invisible" type="button" data-toggle="modal" data-target="#modalPago1">xxx</button>
 </div>
 
-<div class="modal fade" id="stripe" tabindex="-1" role="dialog" aria-labelledby="stripeLabel" aria-hidden="true">
-    
-</div>
 <!-- <div class="modal fade" id="modalPago" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="modalEventoLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">

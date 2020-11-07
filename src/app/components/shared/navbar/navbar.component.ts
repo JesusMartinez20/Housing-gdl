@@ -58,19 +58,22 @@ export class NavbarComponent implements OnInit {
   id_usuario:number = null;
   id_compra = 2;
   id_chat:number = null;
+  enviarForm: FormGroup;
 
   showCreditcard=false;
 
   formRegistro: FormGroup;
+  
 
   @ViewChild('cerrar', {static: false}) cerrar;
   @ViewChild('modalRegistro', {static: false}) modalRegistro;
   @ViewChild('cerrarModalRegistro', {static: false}) cerrarModalRegistro;
-  @ViewChild('modalPago', {static: false}) modalPago;
   @ViewChild('cerrarModalPago', {static: false}) cerrarModalPago;
   @ViewChild('modalBloqueo', {static: false}) modalBloqueo;
   @ViewChild('cerrarModalBloqueo', {static: false}) cerrarModalBloqueo;
   @ViewChild('modalPago1', {static: false}) modalPago1;
+  @ViewChild('modalChat1', {static: false}) modalChat1;
+  @ViewChild('cerrarModalChat1', {static: false}) cerrarModalChat1;
 
   constructor(public router: Router,
               private authService: SocialAuthService,
@@ -82,7 +85,14 @@ export class NavbarComponent implements OnInit {
   ) {
   }
 
+  formEnviarInit(){
+    this.enviarForm = this.fb.group({
+      enviarInput:[],
+    })
+  }
+
   ngOnInit() {
+    this.formEnviarInit();
     this.formRegistroInit();
     this.stripeTest = this.fb.group({
       name: ['', [Validators.required]]
@@ -117,11 +127,13 @@ export class NavbarComponent implements OnInit {
             localStorage.setItem("usuario", JSON.stringify(usuario));
             this.id_usuario = usuario["id_usuario"];
             let tipo = datos["estado"];
-            console.log(tipo);
+            console.log(this.id_usuario);
+            localStorage.setItem("id_usuario", this.id_usuario.toString());
             this.cerrar.nativeElement.click();
-            /*this.chatService.comprobarChat(usuario["id_usuario"]).subscribe(resultado => {
+            this.chatService.comprobarChat(usuario["id_usuario"]).subscribe(resultado => {
               this.id_chat = resultado["id_chat"];
-            });*/
+              console.log(this.id_chat)
+            });
             if (tipo == 2) {
               this.usuariosService.consultaNotificacionBloqueo(datos["id_usuario"]).subscribe(resultado => {
                 this.mensaje = resultado['mensaje'];
@@ -268,9 +280,9 @@ export class NavbarComponent implements OnInit {
     });
   }
 
-  /*verChats() {
+  verChats() {
     this.router.navigate(['chat', this.id_chat])
-  }*/
+  }
 
   createToken(): void {
     const name = this.stripeTest.get('name').value;
@@ -293,6 +305,37 @@ export class NavbarComponent implements OnInit {
   mostrarTarjeta(){
     this.showCreditcard=true;
     console.log(this.showCreditcard)
+  }
+
+  irChat(){
+    if(this.id_chat==null){
+      console.log('ola')
+      this.modalChat1.nativeElement.click();
+    }else{
+      console.log('adios')
+      this.verChats()
+    }
+  }
+
+  crearChat(msg1){
+    console.log(this.id_usuario)
+    console.log(msg1)
+    let id_usuario:any=localStorage.getItem("id_usuario").toString()
+
+    let msg:string=msg1;
+    if(msg.length>=10){
+      this.chatService.crearChat(id_usuario, msg).subscribe(res=>{
+        console.log('oli')
+        this.enviarForm.patchValue({enviarInput:''})
+        this.id_chat=res["id_chat"];
+        console.log(this.id_chat)
+        this.cerrarModalChat1.nativeElement.click();
+        this.router.navigate(['chat', this.id_chat])
+      })
+    }else{
+      window.alert("El mensaje debe de ser mayor a 10 caracteres")
+    }
+
   }
 
 }
