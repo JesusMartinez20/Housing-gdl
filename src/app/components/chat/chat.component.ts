@@ -23,14 +23,14 @@ export class ChatComponent implements OnInit {
     this.formEnviarInit()
     this.activatedRoute.params.subscribe(params => {
       this.idChat=params['id']
-      this.chatService.verDatosChat(params['id']).subscribe(resultado=>{
-        console.log(resultado)
-        this.datos=resultado
-      })
+      // this.chatService.verDatosChat(params['id']).subscribe(resultado=>{
+      //   console.log(resultado)
+      //   this.datos=resultado
+      // })
       this.chatService.verMensajesChat(params['id']).subscribe(resultado=>{
         this.msgs=resultado
       })
-      this.chatService.cambiarEstadoNotificacion(params['id'])
+      //this.chatService.cambiarEstadoNotificacion(params['id'])
     });
 
   }
@@ -56,18 +56,18 @@ export class ChatComponent implements OnInit {
 
   }
 
-  cancelar(){
-    if (window.confirm("Está seguro de querer cancelar la conversación")) {
-      let msg=this.enviarForm.get('enviarInput').value;
-      if(msg.length>=10){
-      this.chatService.cancelarChat(this.idChat,msg).subscribe(res=>{
-        console.log(res)
-        location.reload();
-      })
-    }else{
-      window.alert("El mensaje debe de ser mayor a 10 caracteres")
-    }
-  }
-  }
+  // cancelar(){
+  //   if (window.confirm("Está seguro de querer cancelar la conversación")) {
+  //     let msg=this.enviarForm.get('enviarInput').value;
+  //     if(msg.length>=10){
+  //     this.chatService.cancelarChat(this.idChat,msg).subscribe(res=>{
+  //       console.log(res)
+  //       location.reload();
+  //     })
+  //   }else{
+  //     window.alert("El mensaje debe de ser mayor a 10 caracteres")
+  //   }
+  // }
+  // }
 }
 
