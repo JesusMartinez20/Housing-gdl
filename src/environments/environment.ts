@@ -4,9 +4,9 @@
 
 export const environment = {
   production: true,
-  apiUrl:'http://localhost:8080/casas-php/C-API-P/cliente/',
-  imgUrl:'http://localhost:8080/casas-php/C-API/admin/assets/img/casas/',
-  imgUrlPublicacion:'http://localhost:8080/casas-php/C-API/admin/assets/img/publicaciones/'
+  apiUrl:'http://localhost/C-API-P/cliente/',
+  imgUrl:'http://localhost/C-API/admin/assets/img/casas/',
+  imgUrlPublicacion:'http://localhost/C-API/admin/assets/img/publicaciones/'
 
 };
 

@@ -78,8 +78,11 @@
 </div>
 <div class="card-body" *ngIf="oferta.tipo==2">
       <div class="form-row mb-12" *ngIf="ver==true">
+          <div class="comentarioUsuario">
+            <img src="{{oferta.foto}}" class="imgComentario"/>
+          </div>
           <div class="col-md-4">
-              <label for="nombreusuario">Nombre Usuario: {{oferta.nombre_usuario}}</label>
+              <label for="nombreusuario">{{oferta.nombre_usuario}}</label>
           </div>
 
       </div>
@@ -115,3 +118,13 @@
       </div>
   </div>
 </div>
+
+<style>
+
+  .imgComentario{
+    margin: 5px;
+    height: 50px;
+    width: 50px;
+    border-radius: 360px;
+  }
+</style>

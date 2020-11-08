@@ -39,7 +39,7 @@ export class CasasComponent implements OnInit {
   filtrar(){
       console.log(this.formFiltros.value);
       this.casasService.filtrarCasas(this.formFiltros.value).subscribe( resultado => {
-        if(resultado == 0){
+        if(resultado == null){
           this.noCasas = true;
           console.log(resultado);
           return
