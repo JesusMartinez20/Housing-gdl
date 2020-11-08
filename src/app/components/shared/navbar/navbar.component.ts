@@ -64,6 +64,7 @@ export class NavbarComponent implements OnInit {
 
   formRegistro: FormGroup;
   
+  pagando=false;
 
   @ViewChild('cerrar', {static: false}) cerrar;
   @ViewChild('modalRegistro', {static: false}) modalRegistro;
@@ -72,6 +73,7 @@ export class NavbarComponent implements OnInit {
   @ViewChild('modalBloqueo', {static: false}) modalBloqueo;
   @ViewChild('cerrarModalBloqueo', {static: false}) cerrarModalBloqueo;
   @ViewChild('modalPago1', {static: false}) modalPago1;
+  @ViewChild('cerrarPagar', {static: false}) cerrarPagar;
   @ViewChild('modalChat1', {static: false}) modalChat1;
   @ViewChild('cerrarModalChat1', {static: false}) cerrarModalChat1;
 
@@ -177,6 +179,10 @@ export class NavbarComponent implements OnInit {
         });
       }
     });
+    this.chatService.comprobarChat(parseInt(localStorage.getItem('id_usuario'))).subscribe(resultado => {
+      this.id_chat = resultado["id_chat"];
+      console.log(this.id_chat)
+    });
   }
 
   formRegistroInit() {
@@ -184,7 +190,8 @@ export class NavbarComponent implements OnInit {
       correo: [null, [Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$'), Validators.required]],
       celular: [null, Validators.required],
       celularExt: [null, Validators.required],
-      nacimiento: [null, Validators.required]
+      nacimiento: [null, Validators.required],
+      nacionalidad: [null, Validators.required],
     })
   }
 
@@ -285,6 +292,7 @@ export class NavbarComponent implements OnInit {
   }
 
   createToken(): void {
+    this.pagando=true;
     const name = this.stripeTest.get('name').value;
     this.stripeService
       .createToken(this.card.element, { name })
@@ -293,13 +301,20 @@ export class NavbarComponent implements OnInit {
           // Use the token
           this.usuariosService.realizarPago(this.id_usuario,result.token.id).subscribe(result=>{
             console.log(result)
+            if(result==true){
+              this.cerrarPagar.nativeElement.click();
+              this.router.navigate(['historial'])
+            }else{
+              window.alert("Algo ha salido mal, intentelo mas tarde")
+            }
           })
           console.log(result.token);
         } else if (result.error) {
           // Error creating the token
-          console.log(result.error.message);
+          window.alert(result.error.message);
         }
       });
+      this.pagando=false;
   }
 
   mostrarTarjeta(){
@@ -309,10 +324,8 @@ export class NavbarComponent implements OnInit {
 
   irChat(){
     if(this.id_chat==null){
-      console.log('ola')
       this.modalChat1.nativeElement.click();
     }else{
-      console.log('adios')
       this.verChats()
     }
   }

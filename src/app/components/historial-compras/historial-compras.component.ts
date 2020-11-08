@@ -29,6 +29,7 @@ export class HistorialComprasComponent implements OnInit {
     else{
       this.usuario = JSON.parse(localStorage.getItem("usuario"));
       this.usuariosService.verVentas(this.usuario['id_usuario']).subscribe(resultado => {
+        console.log(resultado)
         if(resultado != null){
           this.hayCompras = true;
           this.historial = resultado;
