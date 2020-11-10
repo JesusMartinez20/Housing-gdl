@@ -106,7 +106,7 @@
     <div class="card-header">
       <h4>Comentarios.</h4>
     </div>
-    <div class="card-footer" *ngIf="comentar != false">
+    <div class="card-footer" *ngIf="comentar == true">
       <div class="row mt-2">
         <h5>Califique la casa</h5>
         <br>
@@ -202,7 +202,7 @@
                   <p>Limpieza: {{ comentario.instalaciones }} Puntos</p>
                 </div>
               </div>
-              
+
               <div class="">
                 <button type="button" class="btn btn-danger mx-auto my-auto d-block" *ngIf="comentario.eliminar == true"
                         (click)="eliminarComentario(comentario.id_calificacion)">X

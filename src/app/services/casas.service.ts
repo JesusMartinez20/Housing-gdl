@@ -52,7 +52,7 @@ export class CasasService {
     return this.http.get(`${this.url}Pagina/verCarousel.php`).pipe(retry(3))
   }
   getCasas(){
-    return this.http.get(`${this.url}Casas/VerCasas.php`).pipe(retry(3));
+    return this.http.get(`${this.url}casas/verCasas.php`).pipe(retry(3));
   }
 
 
