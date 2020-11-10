@@ -19,7 +19,6 @@ export class PerfilComponent implements OnInit {
 
   ngOnInit() {
     this.loggedIn = this.usuariosService.getEstadoSesion();
-
     if(!this.loggedIn){
       this.router.navigate(['inicio']);
     }

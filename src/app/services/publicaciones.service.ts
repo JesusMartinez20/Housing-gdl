@@ -14,7 +14,7 @@ export class PublicacionesService {
   constructor(private http:HttpClient) { }
 
   getPublicaciones(){
-    return this.http.get(`${this.url}/Pagina/verPublicacionesRecientes.php`).pipe(retry(3))
+    return this.http.get(`${this.url}/pagina/verPublicacionesRecientes.php`).pipe(retry(3))
   }
 
   getPublicacion( id_publicacion:number ){

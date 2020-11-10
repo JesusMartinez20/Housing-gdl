@@ -171,11 +171,16 @@ export class CasaViewComponent implements OnInit {
   }
 
   insertarComentario(comentario: string, cal_instalaciones: number, cal_ambiente: number, cal_limpieza: number) {
-    this.usuario = JSON.parse(localStorage.getItem("usuario"));
+    if(cal_ambiente == 0 || cal_instalaciones == 0 || cal_limpieza == 0 || comentario.length<10){
+      window.confirm("Ingrese todos los campos y minimo 10 caracteres en el comentario");
+    }else{
+      this.usuario = JSON.parse(localStorage.getItem("usuario"));
       this.usuariosService.insertarComentario(comentario, cal_instalaciones, cal_ambiente, cal_limpieza, this.id_casa, this.id_usuario).subscribe(resultado => {
         this.comentar = false;
         this.getComentarios(this.id_casa);
       });
+    }
+
   }
 
   getComentarios(id_casa: number) {

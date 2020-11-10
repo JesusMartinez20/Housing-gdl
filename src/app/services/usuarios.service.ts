@@ -74,6 +74,9 @@ export class UsuariosService {
   realizarPago(id_usuario:number, token:string){
     return this.http.get(`${this.url}login/realizarPago.php?id_usuario=${id_usuario}&token=${token}`).pipe(retry(3))
   }
+  miCompra(id_compra:number, id_usuario:number){
+    return this.http.get(`${this.url}login/miCompra.php?id_usuario=${id_usuario}&id_compra=${id_compra}`)//.pipe(retry(3))
+  }
 
 
 

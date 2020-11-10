@@ -2,6 +2,8 @@ import { Component, OnInit,Input  } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ChatService } from 'src/app/services/chat.service';
+import {UsuariosService} from '../../services/usuarios.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-chat',
@@ -10,27 +12,33 @@ import { ChatService } from 'src/app/services/chat.service';
 })
 export class ChatComponent implements OnInit {
   @Input() childMessage: number;
-
+  usuario:any = {};
   msgs:any=[];
   datos:any=[];
   enviarForm: FormGroup;
   idChat:any=null;
+  loggedIn: boolean = false;
 
-  constructor(private chatService:ChatService,private activatedRoute: ActivatedRoute,private fb:FormBuilder,) {
+  constructor(private chatService:ChatService,private activatedRoute: ActivatedRoute,private fb:FormBuilder, private usuariosService: UsuariosService, private router: Router) {
    }
 
   ngOnInit(): void {
+    this.loggedIn = this.usuariosService.getEstadoSesion();
+    if (this.loggedIn == false) {
+        this.router.navigate(['inicio'])
+    }
     this.formEnviarInit()
     this.activatedRoute.params.subscribe(params => {
       this.idChat=params['id']
-      // this.chatService.verDatosChat(params['id']).subscribe(resultado=>{
-      //   console.log(resultado)
-      //   this.datos=resultado
-      // })
+      this.usuario = JSON.parse(localStorage.getItem("usuario"));
+      this.chatService.miChat(params['id'], this.usuario.id_usuario).subscribe(resultado=>{
+        if(resultado == false){
+          this.router.navigate(['inicio'])
+        }
+      })
       this.chatService.verMensajesChat(params['id']).subscribe(resultado=>{
         this.msgs=resultado
       })
-      //this.chatService.cambiarEstadoNotificacion(params['id'])
     });
 
   }
