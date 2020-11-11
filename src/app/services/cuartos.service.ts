@@ -17,7 +17,7 @@ export class CuartosService {
     return this.http.get(`${this.url}cuartos/verCuartosCasa.php?id_casa=${id_casa}`).pipe(retry(3))
   }
   getCuarto( id_cuarto:number ){
-    return this.http.get(`${this.url}cuartos/VerCuarto.php?id_cuarto=${id_cuarto}`)//.pipe(retry(3))
+    return this.http.get(`${this.url}cuartos/verCuarto.php?id_cuarto=${id_cuarto}`)//.pipe(retry(3))
   }
   getImgs( id_cuarto:number ){
     return this.http.get(`${this.url}cuartos/verImagenesCuarto.php?id_cuarto=${id_cuarto}`)//.pipe(retry(3))
