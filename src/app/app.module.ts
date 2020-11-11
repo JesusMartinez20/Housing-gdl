@@ -68,7 +68,7 @@ import { NgxStripeModule } from 'ngx-stripe';
     FormsModule,
     SocialLoginModule,
     MDBBootstrapModulesPro.forRoot(),
-    NgxStripeModule.forRoot('pk_test_51HjyTwEaCyOGAt8vaArjUYevqjaDs0nwsMWE6jLReVYaOIcfEgdZhaTzjUOTWlsVDH3dcDXuhGw33JEEapMSPgyD00COwuwPKF\n'),
+    NgxStripeModule.forRoot('pk_test_51Hm9bxKNYck6nCphXGKQ2mKlVR0cSjZHOyvkv1h5XHetruiwFIicuGYYl1cfW49h4149JMAux2X6KPBYQFQEStwb000Ox1hMcu\n'),
   ],
   entryComponents: [ ModalChatComponent ],
   providers: [
