@@ -157,10 +157,10 @@ export class CasaViewComponent implements OnInit {
         return
       } else {
         this.usuariosService.validarComentarios(this.id_usuario, id_casa).subscribe(resultado => {
-          if (resultado["validacion"] = 0) {
+          if(resultado["validacion"] == 0){
             this.comentar = false;
             //this.getComentarios(id_casa);
-          } else {
+          }else if(resultado["validacion"] == 1){
             this.comentar = true;
             //this.getComentarios(id_casa);
           }
@@ -171,24 +171,28 @@ export class CasaViewComponent implements OnInit {
   }
 
   insertarComentario(comentario: string, cal_instalaciones: number, cal_ambiente: number, cal_limpieza: number) {
-    this.usuario = JSON.parse(localStorage.getItem("usuario"));
+    if(cal_ambiente == 0 || cal_instalaciones == 0 || cal_limpieza == 0 || comentario.length<10){
+      window.confirm("Ingrese todos los campos y minimo 10 caracteres en el comentario");
+    }else{
+      this.usuario = JSON.parse(localStorage.getItem("usuario"));
       this.usuariosService.insertarComentario(comentario, cal_instalaciones, cal_ambiente, cal_limpieza, this.id_casa, this.id_usuario).subscribe(resultado => {
         this.comentar = false;
         this.getComentarios(this.id_casa);
       });
+    }
+
   }
 
   getComentarios(id_casa: number) {
     this.casasService.getComentarios(id_casa).subscribe(resultado => {
       this.comentarios = resultado;
-      console.log('oli')
       if (this.comentarios == null) {
         this.sinComentarios = true;
       } else {
         this.sinComentarios = false;
 
         for (let x = 0; x < this.comentarios.length; x++) {
-          console.log(this.comentarios[x]['fk_usuario']);
+          //console.log(this.comentarios[x]['fk_usuario']);
           if (this.comentarios[x]['fk_usuario'] == this.usuario['id_usuario']) {
             this.comentarios[x].eliminar = true;
           } else {
@@ -196,7 +200,7 @@ export class CasaViewComponent implements OnInit {
           }
         }
       }
-      console.log(this.comentarios)
+      //console.log(this.comentarios)
     })
   }
 
@@ -205,6 +209,7 @@ export class CasaViewComponent implements OnInit {
       this.usuariosService.eliminarComentrio(id_calificacion).subscribe(() => {
         this.activatedRoute.params.subscribe(params => {
           this.validarComentarios(params['id']);
+          this.getComentarios(params['id']);
         });
       });
     }

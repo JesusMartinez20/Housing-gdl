@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ChatService } from 'src/app/services/chat.service';
+import {UsuariosService} from '../../services/usuarios.service';
 
 @Component({
   selector: 'app-chat-list',
@@ -13,10 +14,15 @@ export class ChatListComponent implements OnInit {
   chatId=null;
   foto=null;
   usuario:any = null;
+  loggedIn: boolean = false;
 
-  constructor(private router: Router, private chatService:ChatService) { }
+  constructor(private router: Router, private chatService:ChatService,  private usuariosService: UsuariosService) { }
 
   ngOnInit(): void {
+    this.loggedIn = this.usuariosService.getEstadoSesion();
+    if (this.loggedIn == false) {
+        this.router.navigate(['inicio'])
+    }
     this.usuario = JSON.parse(localStorage.getItem("usuario"));
     this.foto = this.usuario.photoUrl;
     this.chatService.verChats(this.usuario.id_usuario).subscribe( resultado => {

@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { MDBModalRef } from 'ng-uikit-pro-standard';
 import { Subject } from 'rxjs';
 import { ChatService } from 'src/app/services/chat.service';
-
+import {UsuariosService} from '../../services/usuarios.service';
 
 @Component({
   selector: 'app-modal-chat',
@@ -15,14 +15,19 @@ export class ModalChatComponent implements OnInit {
   oferta: any;
   id_usuario:any;
   action = new Subject();
+  loggedIn: boolean = false;
 
-  constructor(public modalRef: MDBModalRef,private fb:FormBuilder,private router: Router,private chatService:ChatService) {}
+  constructor(public modalRef: MDBModalRef,private fb:FormBuilder,private router: Router,private chatService:ChatService,  private usuariosService: UsuariosService) {}
   formEnviarInit(){
     this.enviarForm = this.fb.group({
       enviarInput:[],
     })
   }
   ngOnInit(): void {
+    this.loggedIn = this.usuariosService.getEstadoSesion();
+    if (this.loggedIn == false) {
+        this.router.navigate(['inicio'])
+    }
     this.formEnviarInit();
 
   }

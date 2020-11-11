@@ -35,7 +35,6 @@
                     <div class="dropdown-menu">
                         <a class="dropdown-item" (click)="verPerfil()">Perfil</a>
                         <a class="dropdown-item" (click)="logOut()">Cerrar Sesión</a>
-                        <a class="dropdown-item" (click)="realizarPago()">Pagar</a>
                     </div>
                 </div>
             </li>
@@ -391,12 +390,12 @@
             <form *ngIf="showCreditcard==true" novalidate (ngSubmit)="createToken()" [formGroup]="stripeTest">
                 <input class="form-control inputCards" type="text" formControlName="name" placeholder="Ingrese su nombre">
                 <div class="inputCards">
-                    <ngx-stripe-card 
+                    <ngx-stripe-card
                     [options]="cardOptions"
                     [elementsOptions]="elementsOptions"
                   ></ngx-stripe-card>
                 </div>
-                
+
                 <div *ngIf="pagando==false; then boton else spinner"></div>
                 <ng-template #boton>
                     <div class="buttonDiv">
@@ -408,7 +407,7 @@
                         <div class="spinner-border text-primary buttonDiv" role="status">
                             <span class="sr-only">Loading...</span>
                           </div>
-                    </div>                   
+                    </div>
                 </ng-template>
             </form>
         </div>
