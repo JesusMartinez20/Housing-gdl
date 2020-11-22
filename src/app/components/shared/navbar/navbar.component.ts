@@ -63,7 +63,7 @@ export class NavbarComponent implements OnInit {
   showCreditcard=false;
 
   formRegistro: FormGroup;
-  
+
   pagando=false;
 
   @ViewChild('cerrar', {static: false}) cerrar;
@@ -141,9 +141,7 @@ export class NavbarComponent implements OnInit {
                 this.mensaje = resultado['mensaje'];
                 window.confirm(resultado['mensaje']);
               });
-
               this.logOut();
-              //this.modalBloqueo.nativeElement.click();
             } else {
 
               if (tipo == 0) {
